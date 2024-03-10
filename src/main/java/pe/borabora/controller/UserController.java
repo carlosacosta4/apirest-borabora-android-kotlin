@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import pe.borabora.dto.CreateUser;
-import pe.borabora.entity.Role;
+import pe.borabora.entity.RoleEntity;
 import pe.borabora.entity.UserEntity;
 import pe.borabora.model.ERole;
 import pe.borabora.repository.UserRepository;
@@ -38,8 +38,8 @@ public class UserController {
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
 
-        Set<Role> roles = createUser.getRoles().stream()
-                .map(role -> Role.builder()
+        Set<RoleEntity> roles = createUser.getRoles().stream()
+                .map(role -> RoleEntity.builder()
                         .name(ERole.valueOf(role))
                         .build())
                 .collect(Collectors.toSet());

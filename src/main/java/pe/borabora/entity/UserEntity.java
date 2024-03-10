@@ -58,9 +58,9 @@ public class UserEntity implements Serializable {
 	@Column(name = "password")
 	private String password ;
 	
-	@ManyToMany(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "identity_doc"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<RoleEntity> roles;
 	
 	public UserEntity(String username, String password) {
 		super();
