@@ -6,43 +6,54 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Entity
-@Table(name = "usuarios") 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "users") 
 public class UserEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(unique = true, nullable = false)
-	private Integer docIdentidad;
+	private Integer identity_doc;
 
-	@Column()
-	private String nombres;
+	@NotBlank
+	@Column(name = "name")
+	private String name;
 	
-	@Column()
-	private String apellidos;
+	@NotBlank
+	@Column(name = "lastname")
+	private String lastname;
 	
+	@NotBlank
 	@Column() 
-	private Integer telefono;
+	private Integer cellphone;
 	
-	@Column()
+	@Email
+	@NotBlank
+	@Column(name = "email")
 	private String email;
 	
-	@Column()
-	private String contrasena ;
+	@NotBlank
+	@Column(name = "username")
+	private String username ;
+	
+	@NotBlank
+	@Column(name = "password")
+	private String password ;
 	
 
-	public UserEntity(String email, String contrasena) {
+	public UserEntity(String username, String password) {
 		super();
-		this.email = email;
-		this.contrasena = contrasena;
+		this.username = username;
+		this.password = password;
 	}	
 }
