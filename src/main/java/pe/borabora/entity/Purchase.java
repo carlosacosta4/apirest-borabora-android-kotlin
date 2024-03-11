@@ -33,7 +33,7 @@ public class Purchase implements Serializable { //compra
     @Column
     private Double subtotal;
 
-    @Column
+    @Column(name = "paymentMethod", length = 100)
     private String paymentMethod;
 
     @DateTimeFormat(pattern="yyyy-MM-dd",iso= DateTimeFormat.ISO.DATE)
@@ -44,7 +44,7 @@ public class Purchase implements Serializable { //compra
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "payment_id")
+    @JoinColumn(name = "payment_id", nullable = false)
     private PaymentGateway payment;
 
     @OneToMany(mappedBy = "purchase")

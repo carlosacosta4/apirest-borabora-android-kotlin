@@ -33,13 +33,13 @@ public class Product implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id_product; 
 
-    @Column(name = "name")
+    @Column(name = "name", length = 180)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "brand")
+    @Column(name = "brand", length = 100)
     private String brand;
 
     @Column(name = "price")
