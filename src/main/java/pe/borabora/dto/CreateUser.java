@@ -4,6 +4,7 @@ import java.util.Set;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateUser {
 
+	@NotNull
+	private Integer identity_doc;
+	
     @NotBlank
 	private String name;
 	
 	@NotBlank
 	private String lastname;
 	
-	@NotBlank
+	@NotNull
 	private Integer cellphone;
 	
 	@Email

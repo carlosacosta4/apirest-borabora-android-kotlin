@@ -7,6 +7,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -14,6 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +33,10 @@ public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long user_id;
+	
+	@NotNull
 	private Integer identity_doc;
 
 	@NotBlank
@@ -41,7 +47,7 @@ public class UserEntity implements Serializable {
 	@Column(name = "lastname")
 	private String lastname;
 	
-	@NotBlank
+	@NotNull
 	@Column(name = "cellphone") 
 	private Integer cellphone;
 	
@@ -59,7 +65,7 @@ public class UserEntity implements Serializable {
 	private String password ;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "identity_doc"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
 	
 	public UserEntity(String username, String password) {

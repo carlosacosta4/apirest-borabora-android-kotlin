@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+/*import org.springframework.security.crypto.password.PasswordEncoder;*/
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -13,49 +13,60 @@ import pe.borabora.dto.CreateUser;
 import pe.borabora.entity.RoleEntity;
 import pe.borabora.entity.UserEntity;
 import pe.borabora.model.ERole;
+import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
 
 
 @RestController
 public class UserController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private RoleRepository roleRepository;
+	
+	@GetMapping("/hello")
+	public String hello(){
+	    return "Hello World Not Secured";
+	}
+	
+	@GetMapping("/helloSecured")
+	public String helloSecured(){
+	    return "Hello World Secured";
+	}
+	
+	@PostMapping("/createUser")
+	public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello World Not Secured";
-    }
+	    Set<RoleEntity> roles = createUser.getRoles().stream()
+	            .map(role -> roleRepository.findByName(ERole.valueOf(role))
+	                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")))
+	            .collect(Collectors.toSet());
 
-    @GetMapping("/helloSecured")
-    public String helloSecured(){
-        return "Hello World Secured";
-    }
+	    UserEntity userEntity = UserEntity.builder()
+	            .identity_doc(createUser.getIdentity_doc())
+	            .name(createUser.getName())
+	            .lastname(createUser.getLastname())
+	            .cellphone(createUser.getCellphone())
+	            .email(createUser.getEmail())
+	            .username(createUser.getUsername())
+	            .password((createUser.getPassword()))            
+	            .roles(roles)
+	            .build();
 
-    @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
+	    userRepository.save(userEntity);
 
-        Set<RoleEntity> roles = createUser.getRoles().stream()
-                .map(role -> RoleEntity.builder()
-                        .name(ERole.valueOf(role))
-                        .build())
-                .collect(Collectors.toSet());
+	    return ResponseEntity.ok(userEntity);
+	}
+	
+	@DeleteMapping("/deleteUser")
+	public String deleteUser(@RequestParam String id){
+	    userRepository.deleteById(Long.parseLong(id));
+	    return "Se ha borrado el user con id".concat(id);
+	}
+}    
 
-        UserEntity userEntity = UserEntity.builder()
-        		.name(createUser.getName())
-        		.lastname(createUser.getLastname())
-        		.cellphone(createUser.getCellphone())
-        		.email(createUser.getEmail())
-                .username(createUser.getUsername())
-                .password(passwordEncoder.encode(createUser.getPassword()))            
-                .roles(roles)
-                .build();
-
-        userRepository.save(userEntity);
-
-        return ResponseEntity.ok(userEntity);
-    }
-}
