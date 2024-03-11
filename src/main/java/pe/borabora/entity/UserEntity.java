@@ -33,11 +33,8 @@ public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
-	
 	@NotNull
-	private Integer identity_doc;
+	private Integer identity_doc;	
 
 	@NotBlank
 	@Column(name = "name")
@@ -65,7 +62,7 @@ public class UserEntity implements Serializable {
 	private String password ;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "identity_doc"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
 	
 	public UserEntity(String username, String password) {

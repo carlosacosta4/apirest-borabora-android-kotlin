@@ -10,6 +10,6 @@ import pe.borabora.model.ERole;
 
 
 @Repository
-public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
+public interface RoleRepository extends CrudRepository<RoleEntity, Integer> {
     Optional<RoleEntity> findByName(ERole name);
 }

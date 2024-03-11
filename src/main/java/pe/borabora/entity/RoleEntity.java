@@ -24,7 +24,7 @@ public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long role_id;
+    private Integer role_id;
 
     @Enumerated(EnumType.STRING)
     private ERole name;

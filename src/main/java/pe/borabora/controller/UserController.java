@@ -63,10 +63,6 @@ public class UserController {
 	    return ResponseEntity.ok(userEntity);
 	}
 	
-	@DeleteMapping("/deleteUser")
-	public String deleteUser(@RequestParam String id){
-	    userRepository.deleteById(Long.parseLong(id));
-	    return "Se ha borrado el user con id".concat(id);
-	}
+
 }    
 
