@@ -12,9 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,28 +34,33 @@ public class UserEntity implements Serializable {
 	private Integer identity_doc;	
 
 	@NotBlank
-	@Column(name = "name")
+	@Column(name = "name", length = 80, nullable = false)
 	private String name;
 	
 	@NotBlank
-	@Column(name = "lastname")
+	@Column(name = "lastname", length = 80, nullable = false)
 	private String lastname;
-	
+
 	@NotNull
-	@Column(name = "cellphone") 
+	@Column(name = "cellphone")
 	private Integer cellphone;
+
+	@AssertTrue(message = "Cellphone number must be 9 digits")
+	public boolean isCellphoneValid() {
+		return String.valueOf(this.cellphone).length() == 9;
+	}
 	
 	@Email
 	@NotBlank
-	@Column(name = "email")
+	@Column(name = "email", length = 100, nullable = false)
 	private String email;
 	
 	@NotBlank
-	@Column(name = "username")
+	@Column(name = "username", length = 100, nullable = false)
 	private String username ;
 	
 	@NotBlank
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password ;
 	
 	@ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
