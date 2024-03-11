@@ -45,9 +45,12 @@ public class UserController {
                 .collect(Collectors.toSet());
 
         UserEntity userEntity = UserEntity.builder()
+        		.name(createUser.getName())
+        		.lastname(createUser.getLastname())
+        		.cellphone(createUser.getCellphone())
+        		.email(createUser.getEmail())
                 .username(createUser.getUsername())
-                .password(passwordEncoder.encode(createUser.getPassword()))
-                .email(createUser.getEmail())
+                .password(passwordEncoder.encode(createUser.getPassword()))            
                 .roles(roles)
                 .build();
 
