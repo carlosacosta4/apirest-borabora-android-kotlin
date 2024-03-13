@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "purchases")
+@Table(name = "purchase")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,11 +40,11 @@ public class Purchase implements Serializable { //compra
     private LocalDate purchaseDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "identity_doc", nullable = false)
     private UserEntity user;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id" ,nullable = false)
     private PaymentGateway payment;
 
     @OneToMany(mappedBy = "purchase")

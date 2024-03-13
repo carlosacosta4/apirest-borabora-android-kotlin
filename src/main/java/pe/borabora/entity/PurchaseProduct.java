@@ -18,7 +18,7 @@ public class PurchaseProduct implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id_purchase_product;
 
     @ManyToOne
     @JoinColumn(name = "purchase_id", nullable = false)

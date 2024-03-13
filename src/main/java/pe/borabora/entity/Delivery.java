@@ -49,7 +49,5 @@ public class Delivery implements Serializable {
     @Column(name = "date")
     private String date;
 
-    //1 delivery por 1 compra
-    @OneToOne
-    private Purchase purchase;
+
 }

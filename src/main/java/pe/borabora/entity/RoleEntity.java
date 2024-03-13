@@ -19,7 +19,7 @@ import pe.borabora.model.ERole;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "roles")
+@Table(name = "role")
 public class RoleEntity {
 
     @Id
