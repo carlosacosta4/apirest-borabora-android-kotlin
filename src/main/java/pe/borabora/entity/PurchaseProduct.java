@@ -18,11 +18,11 @@ public class PurchaseProduct implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_purchase_product;
+    private Integer purchase_product_id;
 
     @ManyToOne
     @JoinColumn(name = "purchase_id", nullable = false)
-    @JsonBackReference("purchases-purchaseProducts")
+    @JsonBackReference("purchase_product")
     private Purchase purchase;
 
     @ManyToOne

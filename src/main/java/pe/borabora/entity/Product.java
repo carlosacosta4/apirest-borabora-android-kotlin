@@ -57,7 +57,7 @@ public class Product implements Serializable {
 
     @ManyToOne 
     @JoinColumn(name="id_category",nullable=false)
-    @JsonBackReference("products-categories")
+    @JsonBackReference("id_category")
     private Category category;
 
 }

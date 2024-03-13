@@ -33,9 +33,6 @@ public class Purchase implements Serializable { //compra
     @Column
     private Double subtotal;
 
-    @Column(name = "paymentMethod", length = 100)
-    private String paymentMethod;
-
     @DateTimeFormat(pattern="yyyy-MM-dd",iso= DateTimeFormat.ISO.DATE)
     private LocalDate purchaseDate;
 
@@ -48,7 +45,7 @@ public class Purchase implements Serializable { //compra
     private PaymentGateway payment;
 
     @OneToMany(mappedBy = "purchase")
-    @JsonManagedReference("purchases-purchaseProducts")
+    @JsonManagedReference("purchase_product")
     private Collection<PurchaseProduct> purchaseProducts = new ArrayList<>();
 
 }

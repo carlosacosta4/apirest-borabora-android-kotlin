@@ -31,7 +31,7 @@ public class Category implements Serializable {
     private String image;
 
     @OneToMany(mappedBy="category")
-    @JsonManagedReference("products-categories")
+    @JsonManagedReference("id_category")
     private Collection<Product> products = new ArrayList<>();
 
 }
