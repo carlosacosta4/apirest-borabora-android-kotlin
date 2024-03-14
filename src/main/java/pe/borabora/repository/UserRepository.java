@@ -9,12 +9,9 @@ import org.springframework.stereotype.Repository;
 import pe.borabora.entity.UserEntity;
 
 
-@Repository
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
     Optional<UserEntity> findByUsername(String username);
 
-    @Query("select u from UserEntity u where u.username = ?1")
-    Optional<UserEntity> getName(String username);
 }
 
