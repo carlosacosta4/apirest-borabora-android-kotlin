@@ -19,7 +19,7 @@ public class OrderController {
 
     @PostMapping("/pickup")
     public ResponseEntity<String> createPickUpOrder(@RequestBody PickUp pickUp) {
-        orderService.createPickUpOrder(pickUp.getDate());
+        orderService.createPickUpOrder(pickUp.getDate(), pickUp.getHeadquarter());
         return ResponseEntity.ok("Pickup order created successfully");
     }
 

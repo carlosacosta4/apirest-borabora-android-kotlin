@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.borabora.entity.Delivery;
 import pe.borabora.entity.District;
+import pe.borabora.entity.Headquarter;
 import pe.borabora.entity.PickUp;
 import pe.borabora.repository.DeliveryRepository;
 import pe.borabora.repository.PickUpRepository;
@@ -14,8 +15,8 @@ public class OrderService{
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    public void createPickUpOrder(String date) {
-        PickUp pickUp = new PickUp(date);
+    public void createPickUpOrder(String date, Headquarter headquarter) {
+        PickUp pickUp = new PickUp(date, headquarter);
         pickUpRepository.save(pickUp);
     }
 
