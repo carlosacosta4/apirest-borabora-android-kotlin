@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "payment_gateway")
@@ -25,10 +24,10 @@ public class PaymentGateway implements Serializable {
 
     @Column(name = "card")
     private String card;
-
+    
     @Column(name = "currency")
     private String currency;
-
+    
     @Column(name = "quota_number")
     private String quota_number;
 
@@ -38,11 +37,11 @@ public class PaymentGateway implements Serializable {
     @Column(name = "transactionDate")
     private String transactionDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
     @JoinColumn(name = "cod_card_type", referencedColumnName = "cod_card_type", nullable = false)
     private CardType card_type;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
     @JoinColumn(name = "cod_status", referencedColumnName = "codigo_status", nullable = false)
     private Status status;
 }

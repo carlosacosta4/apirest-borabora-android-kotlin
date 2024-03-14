@@ -1,13 +1,13 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
+
 
 @Entity
 @AllArgsConstructor
@@ -20,34 +20,34 @@ public class Delivery implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_delivery;
 
-    @Column(name = "condominium")
-    private Boolean condominium;
+    @Column(name = "address", length = 200)
+    private String address;
+    
+    @Column(name = "date")
+    private String date;
 
     @Column(name = "department", length = 100)
     private String department;
 
+    @ManyToOne @JoinColumn(name = "cod_district", nullable = false)
+    @JsonBackReference("cod_district")
+    private District district;
+
     @Column(name = "province", length = 100)
     private String province;
 
-    @Column(name = "district", length = 100)
-    private String district;
-
-    @Column(name = "address", length = 200)
-    private String address;
-
     @Column(name = "ubigeo")
     private Integer ubigeo;
+    
+    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_type_order", referencedColumnName = "id_type_order", nullable = false)
+    private TypeOrder typeOrder;
 
     @AssertTrue(message = "Ubigeo number must be 6 digits")
     public boolean isUbigeoValid() {
         return String.valueOf(this.ubigeo).length() == 6;
     }
 
-    @Column(name = "headquarters", length = 80)
-    private String headquarters; //sede
-
-    @Column(name = "date")
-    private String date;
 
 
 }

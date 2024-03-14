@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,4 +19,7 @@ public class District {
 
     @Column(name = "district", nullable = false)
     private String district;
+
+    @OneToMany(mappedBy = "district")
+    private Collection<Delivery> deliveries = new ArrayList<>();
 }

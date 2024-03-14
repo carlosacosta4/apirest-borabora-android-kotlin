@@ -1,9 +1,6 @@
 package pe.borabora.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,8 @@ public class TypeOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_type_order;
 
-    //1:1 delivery
+    @OneToOne @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     //1:1 pick up
 }
