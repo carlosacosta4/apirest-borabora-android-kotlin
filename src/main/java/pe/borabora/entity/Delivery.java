@@ -38,16 +38,15 @@ public class Delivery implements Serializable {
 
     @Column(name = "ubigeo")
     private Integer ubigeo;
-    
-    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_type_order", referencedColumnName = "id_type_order", nullable = false)
-    private TypeOrder typeOrder;
 
     @AssertTrue(message = "Ubigeo number must be 6 digits")
     public boolean isUbigeoValid() {
         return String.valueOf(this.ubigeo).length() == 6;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "type_order_id")
+    private TypeOrder order;
 
 
 }

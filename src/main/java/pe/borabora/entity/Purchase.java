@@ -48,4 +48,8 @@ public class Purchase implements Serializable { //compra
     @JsonManagedReference("purchase_product")
     private Collection<PurchaseProduct> purchaseProducts = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "type_order_id")
+    private TypeOrder order;
+
 }

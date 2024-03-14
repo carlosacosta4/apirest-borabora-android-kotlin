@@ -9,11 +9,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TypeOrder {
+@Table(name = "pick_up")
+public class PickUp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer type_order_id;
+    private Integer id_pick_up;
 
-    @Column(name = "type") //guardara si es delivery o pick_up
-    private String type;
+    @Column(name = "date")
+    private String date;
+
+    @ManyToOne
+    @JoinColumn(name = "type_order_id")
+    private TypeOrder order;
+
 }

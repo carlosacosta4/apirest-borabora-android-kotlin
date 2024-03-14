@@ -37,11 +37,11 @@ public class PaymentGateway implements Serializable {
     @Column(name = "transactionDate")
     private String transactionDate;
 
-    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cod_card_type", referencedColumnName = "cod_card_type", nullable = false)
     private CardType card_type;
 
-    @OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cod_status", referencedColumnName = "codigo_status", nullable = false)
     private Status status;
 }
