@@ -14,6 +14,6 @@ public class TypeOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer type_order_id;
 
-    @Column(name = "type") //guardara si es delivery o pick_up
+    @Column(name = "type")
     private String type;
 }
