@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-/*import org.springframework.security.crypto.password.PasswordEncoder;*/
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -20,8 +20,8 @@ import pe.borabora.repository.UserRepository;
 @RestController
 public class UserController {
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -39,6 +39,7 @@ public class UserController {
 	    return "Hello World Secured";
 	}
 	
+	//Crear Usuario
 	@PostMapping("/createUser")
 	public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
 
@@ -54,7 +55,7 @@ public class UserController {
 	            .cellphone(createUser.getCellphone())
 	            .email(createUser.getEmail())
 	            .username(createUser.getUsername())
-	            .password((createUser.getPassword()))            
+	            .password(passwordEncoder.encode(createUser.getPassword()))            
 	            .roles(roles)
 	            .build();
 
@@ -63,6 +64,13 @@ public class UserController {
 	    return ResponseEntity.ok(userEntity);
 	}
 	
-
+	/*
+	Eliminar Usuario
+	@DeleteMapping("/deleteUser")
+    public String deleteUser(@RequestParam String id){
+        userRepository.deleteById(Long.parseLong(id));
+        return "Se ha borrado el user con id".concat(id);
+    }
+    */
 }    
 
