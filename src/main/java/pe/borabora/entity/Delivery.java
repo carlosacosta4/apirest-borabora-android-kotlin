@@ -11,14 +11,10 @@ import java.io.Serializable;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Delivery implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_delivery;
+@Table(name = "delivery")
+@DiscriminatorValue("DELIVERY")
+public class Delivery extends TypeOrder {
 
     @Column(name = "address", length = 200)
     private String address;
@@ -43,10 +39,8 @@ public class Delivery implements Serializable {
     public boolean isUbigeoValid() {
         return String.valueOf(this.ubigeo).length() == 6;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "type_order_id")
-    private TypeOrder order;
-
+    public Delivery() {
+        setType("DELIVERY");
+    }
 
 }

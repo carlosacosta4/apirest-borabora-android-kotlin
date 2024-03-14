@@ -7,19 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "pick_up")
-public class PickUp {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pick_up;
+@DiscriminatorValue("PICKUP")
+public class PickUp extends TypeOrder{
 
     @Column(name = "date")
     private String date;
 
-    @ManyToOne
-    @JoinColumn(name = "type_order_id")
-    private TypeOrder order;
-
+    public PickUp() {
+        this.setType("PICKUP");
+    }
 }
