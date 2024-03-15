@@ -1,11 +1,15 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "payment_gateway")
@@ -41,7 +45,8 @@ public class PaymentGateway implements Serializable {
     @JoinColumn(name = "cod_card_type", referencedColumnName = "cod_card_type", nullable = false)
     private CardType card_type;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cod_status", referencedColumnName = "codigo_status", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "codigo_status", nullable = false)
+    @JsonBackReference // Para evitar ciclos infinitos en la serialización JSON
     private Status status;
 }
