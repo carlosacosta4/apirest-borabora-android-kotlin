@@ -17,6 +17,9 @@ public class Headquarter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cod_headquarter;
 
+    @Column(name = "headquarter", unique = true)
+    private String headquarter;
+
     @OneToMany(mappedBy = "headquarter")
     private Collection<PickUp> pick = new ArrayList<>();
 
