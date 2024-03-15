@@ -41,8 +41,6 @@ public class SecurityConfig {
                     auth.requestMatchers("/hello").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .exceptionHandling(exceptions -> exceptions
-	                    .accessDeniedPage("/accesoDenegado"))
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })

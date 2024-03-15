@@ -18,9 +18,4 @@ public class TestController {
     public String accessUser(){
         return "Hola, has accedito con rol de USER";
     }
-    
-    @GetMapping("/accessDenied")
-    public String accessDenied(){
-        return "Acceso Denegado";
-    }
 }
