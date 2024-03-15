@@ -29,16 +29,6 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 	
-	@GetMapping("/hello")
-	public String hello(){
-	    return "Hello World Not Secured";
-	}
-	
-	@GetMapping("/helloSecured")
-	public String helloSecured(){
-	    return "Hello World Secured";
-	}
-	
 	//Crear Usuario
 	@PostMapping("/createUser")
 	public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
