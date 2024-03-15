@@ -60,5 +60,10 @@ public class Product implements Serializable {
     @JsonBackReference("id_category")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "cod_brand_product", nullable = false)
+    @JsonBackReference("cod_brand_product")
+    private BrandProduct brandproduct;
+
 }
 
