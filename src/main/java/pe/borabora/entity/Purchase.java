@@ -52,4 +52,9 @@ public class Purchase implements Serializable { //compra
     @JoinColumn(name = "type_order_id")
     private TypeOrder order;
 
+    @ManyToMany
+    @JoinTable(name = "purchase_product",
+            joinColumns = @JoinColumn(name = "purchase_id"),
+            inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private Collection<Product> products = new ArrayList<>();
 }
