@@ -7,6 +7,7 @@ import pe.borabora.entity.Product;
 import pe.borabora.repository.ProductRepository;
 import pe.borabora.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,5 +30,22 @@ public class ProductServiceImpl implements ProductService {
         return productList.stream()
                 .map(ProductDTO::new)
                 .collect(Collectors.toList());
-    };
+    }
+
+    @Override
+    public List<ProductDTO> getTopSellingProducts(int limit) {
+        List<Object[]> results = productRepository.findTopSellingProducts();
+        List<ProductDTO> topSellingProducts = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Product product = (Product) result[0];
+            topSellingProducts.add(new ProductDTO(product));
+            if (topSellingProducts.size() >= limit) {
+                break;
+            }
+        }
+
+        return topSellingProducts;
+
+    }
 }

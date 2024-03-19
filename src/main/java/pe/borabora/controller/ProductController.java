@@ -15,12 +15,14 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    //lista todos los productos
     @GetMapping("/all")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    //lista los productos segun la categoria
     @GetMapping("/byCategory/{categoryId}")
     public ResponseEntity<List<ProductDTO>> getProductsByCategoryId(@PathVariable Integer categoryId) {
         if (categoryId != null) {
@@ -31,4 +33,10 @@ public class ProductController {
         }
     }
 
+    //lista los 10 productos màs vendidos (RANKING)
+    @GetMapping("/topSelling")
+    public ResponseEntity<List<ProductDTO>> getTopSellingProducts(@RequestParam(defaultValue = "10") int limit) {
+        List<ProductDTO> topSellingProducts = productService.getTopSellingProducts(limit);
+        return new ResponseEntity<>(topSellingProducts, HttpStatus.OK);
+    }
 }
