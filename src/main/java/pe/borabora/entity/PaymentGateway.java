@@ -41,8 +41,9 @@ public class PaymentGateway implements Serializable {
     @Column(name = "transactionDate")
     private String transactionDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cod_card_type", referencedColumnName = "cod_card_type", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "cod_card_type", nullable = false)
+    @JsonBackReference
     private CardType card_type;
 
     @ManyToOne

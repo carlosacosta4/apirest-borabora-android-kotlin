@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -19,4 +21,7 @@ public class CardType implements Serializable {
 
     @Column(name = "type",nullable = false)
     private Character type;
+
+    @OneToMany(mappedBy = "card_type", cascade = CascadeType.ALL)
+    private Collection<PaymentGateway> paymentGateways = new ArrayList<>();
 }
