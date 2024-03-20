@@ -41,6 +41,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/hello").permitAll();
                     auth.requestMatchers("/products/**").permitAll();
                     auth.requestMatchers("/categories/**").permitAll();
+                    auth.requestMatchers("/user/**").permitAll(); //esto se borrarà, lo usamos temporal para avanzar en android sin token
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,12 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
+<<<<<<< HEAD
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+=======
+    //@PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<Category>> getAllCategories() {
+>>>>>>> a83c8572c4f2e241baccebc9397e6bb2e33feb73
         List<Category> categories = categoryService.getAllCategories();
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         for (Category category : categories) {
