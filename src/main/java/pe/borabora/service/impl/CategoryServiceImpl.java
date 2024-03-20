@@ -7,6 +7,8 @@ import pe.borabora.entity.Category;
 import pe.borabora.repository.CategoryRepository;
 import pe.borabora.service.CategoryService;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
@@ -18,5 +20,10 @@ public class CategoryServiceImpl implements CategoryService {
             return new CategoryDTO(category.getId_category(), category.getName(), category.getImage());
         }
         return null;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }
