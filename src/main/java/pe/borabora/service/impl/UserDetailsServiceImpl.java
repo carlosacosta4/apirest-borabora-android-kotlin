@@ -50,7 +50,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     // Actualizar los detalles de un usuario
-    @PreAuthorize("hasRole('USER')")
     public void updateUserDetails(UserEntity userEntity, CreateUser userDetails) {
         userDetails.setIdentity_doc(userDetails.getIdentity_doc());
         userEntity.setName(userDetails.getName());
