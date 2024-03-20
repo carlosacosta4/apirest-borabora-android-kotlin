@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,15 @@ import pe.borabora.entity.UserEntity;
 import pe.borabora.model.ERole;
 import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
+import pe.borabora.service.impl.UserDetailsServiceImpl;
 
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -62,5 +67,18 @@ public class UserController {
         return "Se ha borrado el user con id".concat(id);
     }
     */
+
+	@PutMapping("/{userId}")
+	public ResponseEntity<String> updateUserDetails(@PathVariable Integer userId, @RequestBody CreateUser userDetails) {
+		UserEntity userEntity = userDetailsService.getUserById(userId);
+		if (userEntity == null) {
+			return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+		}
+
+		// Actualiza los detalles del usuario
+		userDetailsService.updateUserDetails(userEntity, userDetails);
+
+		return new ResponseEntity<>("Detalles del usuario actualizados con éxito", HttpStatus.OK);
+	}
 }    
 

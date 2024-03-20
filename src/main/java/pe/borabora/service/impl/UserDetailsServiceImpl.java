@@ -1,5 +1,7 @@
 package pe.borabora.service.impl;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import pe.borabora.dto.CreateUser;
 import pe.borabora.entity.UserEntity;
 import pe.borabora.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserEntity getUserById(Integer userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    // Actualizar los detalles de un usuario
+    @PreAuthorize("hasRole('USER')")
+    public void updateUserDetails(UserEntity userEntity, CreateUser userDetails) {
+        userDetails.setIdentity_doc(userDetails.getIdentity_doc());
+        userEntity.setName(userDetails.getName());
+        userEntity.setLastname(userDetails.getLastname());
+        userEntity.setEmail(userDetails.getEmail());
+        userEntity.setCellphone(userDetails.getCellphone());
+        // No actualizas los roles aquí
+        userRepository.save(userEntity);
     }
 }

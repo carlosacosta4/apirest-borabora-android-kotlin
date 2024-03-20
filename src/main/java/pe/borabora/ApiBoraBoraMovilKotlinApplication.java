@@ -10,7 +10,7 @@ public class ApiBoraBoraMovilKotlinApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiBoraBoraMovilKotlinApplication.class, args);
 		
-		System.out.println(new BCryptPasswordEncoder().encode("1234"));
+		System.out.println(new BCryptPasswordEncoder().encode("12345"));
 	}
 
 }
