@@ -3,7 +3,7 @@ package pe.borabora.security;
 import pe.borabora.security.filters.JwtAuthenticationFilter;
 import pe.borabora.security.filters.JwtAuthorizationFilter;
 import pe.borabora.security.jwt.JwtUtils;
-import pe.borabora.service.UserDetailsServiceImpl;
+import pe.borabora.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package pe.borabora.security.filters;
 
 import pe.borabora.security.jwt.JwtUtils;
-import pe.borabora.service.UserDetailsServiceImpl;
+import pe.borabora.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

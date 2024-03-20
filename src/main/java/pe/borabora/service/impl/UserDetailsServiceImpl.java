@@ -1,4 +1,4 @@
-package pe.borabora.service;
+package pe.borabora.service.impl;
 
 import pe.borabora.entity.UserEntity;
 import pe.borabora.repository.UserRepository;
@@ -41,5 +41,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 true,
                 true,
                 authorities);
+    }
+
+    public UserEntity getUserById(Integer userId) {
+        return userRepository.findById(userId).orElse(null);
     }
 }

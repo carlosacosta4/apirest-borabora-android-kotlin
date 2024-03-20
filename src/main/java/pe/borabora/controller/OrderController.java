@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.borabora.entity.Delivery;
 import pe.borabora.entity.PickUp;
-import pe.borabora.service.OrderService;
+import pe.borabora.service.impl.TypeOrderServiceImpl;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private TypeOrderServiceImpl orderService;
 
     @PostMapping("/pickup")
     public ResponseEntity<String> createPickUpOrder(@RequestBody PickUp pickUp) {

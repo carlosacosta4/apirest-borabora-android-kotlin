@@ -48,4 +48,9 @@ public class ProductServiceImpl implements ProductService {
         return topSellingProducts;
 
     }
+
+    @Override
+    public Product getProductById(Integer productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
 }
