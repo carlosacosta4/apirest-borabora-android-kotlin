@@ -1,5 +1,6 @@
 package pe.borabora.controller;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,17 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        List<CategoryDTO> categoryDTOs = new ArrayList<>();
+        for (Category category : categories) {
+            CategoryDTO categoryDTO = new CategoryDTO(
+                category.getId_category(),
+                category.getName(),
+                category.getImage()
+            );
+            categoryDTOs.add(categoryDTO);
+        }
+        return new ResponseEntity<>(categoryDTOs, HttpStatus.OK);
     }
 }
