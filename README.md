@@ -41,6 +41,11 @@ Para ejecutar este proyecto en Spring Tool Suite (STS), sigue estos pasos:
 
 <br>
 
+## Inserción de datos
+Una vez que las tablas se han creado en la base de datos, puedes utilizar los scripts SQL disponibles en este [repositorio](https://github.com/CarlosAcosta4/resources-apis-borabora) para insertar datos.
+
+<br>
+
 ## Arquitectura
 ![Arquitectura](./src/main/img/Arquitectura.png)
 
