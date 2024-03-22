@@ -46,6 +46,8 @@ Una vez que las tablas se han creado en la base de datos, puedes utilizar los sc
 
 <br>
 
+<div align="center">
+  
 ## Arquitectura
 ![Arquitectura](./src/main/img/Arquitectura.png)
 
@@ -58,5 +60,7 @@ Una vez que las tablas se han creado en la base de datos, puedes utilizar los sc
 
 ## Diagrama Físico
 ![Fisico](./src/main/img/Fisico.png)
+
+</div>
 
 
