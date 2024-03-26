@@ -31,12 +31,7 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-<<<<<<< HEAD
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-=======
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<Category>> getAllCategories() {
->>>>>>> a83c8572c4f2e241baccebc9397e6bb2e33feb73
         List<Category> categories = categoryService.getAllCategories();
         List<CategoryDTO> categoryDTOs = new ArrayList<>();
         for (Category category : categories) {
