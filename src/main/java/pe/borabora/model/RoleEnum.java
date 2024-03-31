@@ -1,6 +1,6 @@
 package pe.borabora.model;
 
-public enum ERole {
+public enum RoleEnum {
     ADMIN,
     USER
 }

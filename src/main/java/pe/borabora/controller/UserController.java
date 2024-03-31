@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import pe.borabora.dto.CreateUser;
 import pe.borabora.entity.RoleEntity;
 import pe.borabora.entity.UserEntity;
-import pe.borabora.model.ERole;
+import pe.borabora.model.RoleEnum;
 import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
 import pe.borabora.service.impl.UserDetailsServiceImpl;
