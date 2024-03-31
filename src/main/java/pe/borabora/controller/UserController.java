@@ -18,7 +18,7 @@ import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
 import pe.borabora.service.impl.UserDetailsServiceImpl;
 
-
+/*
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -59,7 +59,6 @@ public class UserController {
 	    return ResponseEntity.ok(userEntity);
 	}
 	
-	/*
 	Eliminar Usuario
 	@DeleteMapping("/deleteUser")
     public String deleteUser(@RequestParam String id){
@@ -68,6 +67,7 @@ public class UserController {
     }
     */
 
+/*
 	@PutMapping("/{userId}")
 	public ResponseEntity<String> updateUserDetails(@PathVariable Integer userId, @RequestBody CreateUser userDetails) {
 		UserEntity userEntity = userDetailsService.getUserById(userId);
@@ -80,5 +80,5 @@ public class UserController {
 
 		return new ResponseEntity<>("Detalles del usuario actualizados con éxito", HttpStatus.OK);
 	}
-}    
+}    */
 
