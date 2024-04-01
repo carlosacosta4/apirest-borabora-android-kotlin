@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import pe.borabora.dto.response.ErrorResponse;
+import pe.borabora.dto.response.ApiResponse;
 
 
 @ControllerAdvice
@@ -18,32 +18,32 @@ public class GlobalExceptionHandler {
 	 // Este método maneja la excepción BadCredentialsException, 
 	 // que se lanza cuando la contraseña es incorrecta.
 	 @ExceptionHandler(BadCredentialsException.class)
-	 public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
-	     ErrorResponse errorResponse = new ErrorResponse();
-	     errorResponse.setMessage("Contraseña incorrecta");
-	     errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+	 public ResponseEntity<ApiResponse> handleBadCredentialsException(BadCredentialsException ex) {
+	     ApiResponse apiResponse = new ApiResponse();
+	     apiResponse.setMessage("Contraseña incorrecta");
+	     apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
 	
-	     return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+	     return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
 	 }
 	
 	 // Este método maneja la excepción UsernameNotFoundException, 
 	 // que se lanza cuando el usuario no se encuentra en la base de datos.
 	 @ExceptionHandler(UsernameNotFoundException.class)
-	 public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-	     ErrorResponse errorResponse = new ErrorResponse();
-	     errorResponse.setMessage("Usuario no registrado");
-	     errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+	 public ResponseEntity<ApiResponse> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+	     ApiResponse apiResponse = new ApiResponse();
+	     apiResponse.setMessage("Usuario no registrado");
+	     apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-	     return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+	     return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
 	 }
 	 
 	 // Manejo de las excepciones HttpMessageNotReadableException
 	 @ExceptionHandler(HttpMessageNotReadableException.class)
-	 public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-		 ErrorResponse errorResponse = new ErrorResponse();
-		 errorResponse.setMessage("Los datos enviados son incorrectos");
-		 errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+	 public ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+		 ApiResponse apiResponse = new ApiResponse();
+		 apiResponse.setMessage("Los datos enviados son incorrectos");
+		 apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
 		 
-         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
      }
 }

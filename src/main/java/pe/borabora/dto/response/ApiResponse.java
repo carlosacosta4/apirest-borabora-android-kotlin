@@ -12,7 +12,7 @@ import pe.borabora.entity.UserEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorResponse {
+public class ApiResponse {
     
 	private String message;
     private int status;

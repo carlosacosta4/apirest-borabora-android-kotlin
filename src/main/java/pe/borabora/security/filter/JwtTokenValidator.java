@@ -7,7 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pe.borabora.dto.response.ErrorResponse;
+import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.util.JwtUtils;
 
 import org.springframework.http.HttpHeaders;
@@ -60,12 +60,12 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (AccessDeniedException ex) {
 
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setMessage("Acceso denegado");
-            errorResponse.setStatus(HttpStatus.FORBIDDEN.value());
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.setMessage("Acceso denegado");
+            apiResponse.setStatus(HttpStatus.FORBIDDEN.value());
 
             ObjectMapper objectMapper = new ObjectMapper();
-            String jsonErrorResponse = objectMapper.writeValueAsString(errorResponse);
+            String jsonErrorResponse = objectMapper.writeValueAsString(apiResponse);
 
             // Envía la respuesta al cliente.
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

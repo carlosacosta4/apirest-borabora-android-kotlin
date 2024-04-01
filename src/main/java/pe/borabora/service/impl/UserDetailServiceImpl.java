@@ -100,7 +100,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved, null, authorities);
         String accessToken = jwtUtils.createToken(authentication);
 
-        AuthenticationResponse authResponse = new AuthenticationResponse(username, "User created successfully", accessToken, true, roles);
+        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Usuario creado exitosamente", accessToken, true, roles);
         return authResponse;
     }
 
