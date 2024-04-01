@@ -1,8 +1,8 @@
 package pe.borabora.model;
 
 public enum RoleEnum {
-	ADMIN_FULL,
-	ADMIN_BASIC,
+    ADMIN_FULL,
+    ADMIN_BASIC,
     USER,
-    INVITED,    
+    INVITED,
 }

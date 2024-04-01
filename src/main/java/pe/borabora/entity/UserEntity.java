@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -52,8 +53,8 @@ public class UserEntity implements Serializable {
 	@NotBlank
 	@Column(name = "password", nullable = false)
 	private String password ;
-	
-	@Column(name = "is_enabled")
+
+    @Column(name = "is_enabled")
     private boolean isEnabled;
 
     @Column(name = "account_No_Expired")
@@ -68,10 +69,4 @@ public class UserEntity implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "identity_doc"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles = new HashSet<>();
-	
-	public UserEntity(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}	
 }

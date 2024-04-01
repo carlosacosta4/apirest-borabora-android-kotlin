@@ -1,21 +1,33 @@
 package pe.borabora.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/method")
 public class TestController {
 
-    @GetMapping("/accessAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String accessAdmin(){
-        return "Hola, has accedito con rol de ADMIN";
+    @GetMapping("/get")
+    public String callGet(){
+        return "Method Called With GET";
     }
 
-    @GetMapping("/accessUser")
-    @PreAuthorize("hasRole('USER')")
-    public String accessUser(){
-        return "Hola, has accedito con rol de USER";
+    @PostMapping("/post")
+    public String callPost(){
+        return "Method Called With POST";
+    }
+
+    @PutMapping("/put")
+    public String callPut(){
+        return "Method Called With PUT";
+    }
+
+    @DeleteMapping("/delete")
+    public String callDelete(){
+        return "Method Called With DELETE";
     }
 }
