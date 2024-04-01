@@ -4,11 +4,15 @@ import jakarta.validation.Valid;
 import pe.borabora.dto.request.CreateUserRequest;
 import pe.borabora.dto.request.LoginRequest;
 import pe.borabora.dto.response.AuthenticationResponse;
+import pe.borabora.dto.response.ErrorResponse;
+import pe.borabora.repository.UserRepository;
 import pe.borabora.service.impl.UserDetailServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +25,26 @@ public class AuthenticationController {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid CreateUserRequest userRequest){
+    public ResponseEntity<?> register(@RequestBody @Valid CreateUserRequest userRequest){
+        if (userRepository.existsByIdentityDoc(userRequest.getIdentity_doc())) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setMessage("Ya existe un usuario con el mismo documento de identidad");
+            errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+        if (userRepository.existsByUsername(userRequest.getUsername())) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setMessage("Ya existe un usuario con el mismo nombre de usuario");
+            errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(this.userDetailService.createUser(userRequest), HttpStatus.CREATED);
     }
 

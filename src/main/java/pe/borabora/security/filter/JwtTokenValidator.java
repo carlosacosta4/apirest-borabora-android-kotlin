@@ -1,14 +1,19 @@
 package pe.borabora.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import pe.borabora.dto.response.ErrorResponse;
 import pe.borabora.util.JwtUtils;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,24 +38,39 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        try {
+            String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (jwtToken != null) {
-            jwtToken = jwtToken.substring(7);
+            if (jwtToken != null) {
+                jwtToken = jwtToken.substring(7);
 
-            DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
+                DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
 
-            String username = jwtUtils.extractUsername(decodedJWT);
-            String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
+                String username = jwtUtils.extractUsername(decodedJWT);
+                String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
 
-            Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
 
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
-            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-            context.setAuthentication(authenticationToken);
-            SecurityContextHolder.setContext(context);
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                context.setAuthentication(authenticationToken);
+                SecurityContextHolder.setContext(context);
+            }
 
+            filterChain.doFilter(request, response);
+        } catch (AccessDeniedException ex) {
+
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setMessage("Acceso denegado");
+            errorResponse.setStatus(HttpStatus.FORBIDDEN.value());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonErrorResponse = objectMapper.writeValueAsString(errorResponse);
+
+            // Envía la respuesta al cliente.
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json");
+            response.getWriter().write(jsonErrorResponse);
         }
-        filterChain.doFilter(request, response);
     }
 }

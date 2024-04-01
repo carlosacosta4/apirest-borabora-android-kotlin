@@ -78,7 +78,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
         
         UserEntity userEntity = UserEntity.builder()
-                .identity_doc(identity_doc)
+                .identityDoc(identity_doc)
                 .name(name)
                 .lastname(lastname)
                 .cellphone(cellphone)

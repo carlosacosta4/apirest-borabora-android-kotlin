@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -58,7 +59,8 @@ public class JwtUtils {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT;
         } catch (JWTVerificationException exception) {
-            throw new JWTVerificationException("Token invalido, no Autorizado");
+
+            throw new AccessDeniedException("Acceso denegado");
         }
     }
  

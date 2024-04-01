@@ -22,7 +22,7 @@ public class UserEntity implements Serializable {
 	@Id
 	@NotNull
 	@Column(unique = true)
-	private Integer identity_doc;	
+	private Integer identityDoc;	
 
 	@NotBlank
 	@Column(name = "name", length = 80, nullable = false)
