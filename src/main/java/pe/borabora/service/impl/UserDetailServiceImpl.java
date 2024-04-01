@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -47,13 +48,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        UserEntity userEntity = userRepository.findUserEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
+    	UserEntity userEntity = userRepository.findUserEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         userEntity.getRoles().forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
-        userEntity.getRoles().stream().flatMap(role -> role.getPermissionList().stream()).forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getPermission_name())));
-
-        return new User(userEntity.getUsername(), userEntity.getPassword(), userEntity.isEnabled(), userEntity.isAccountNoExpired(), userEntity.isCredentialNoExpired(), userEntity.isAccountNoLocked(), authorityList);
+        
+        return new User(userEntity.getUsername(), userEntity.getPassword(), true, true, true, true, authorityList);
     }
 
     public AuthenticationResponse createUser(CreateUserRequest createRoleRequest) {
@@ -68,11 +68,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
         
         List<String> rolesRequest = createRoleRequest.getRoleRequest().getRoleListName();
 
-        List<RoleEnum> roles = rolesRequest.stream()
+        List<RoleEnum> roleEnums = rolesRequest.stream()
             .map(role -> RoleEnum.valueOf(role.toUpperCase()))
             .collect(Collectors.toList());
 
-        Set<RoleEntity> roleEntityList = roleRepository.findRoleEntitiesByRoleEnumIn(roles).stream().collect(Collectors.toSet());
+        Set<RoleEntity> roleEntityList = roleRepository.findRoleEntitiesByRoleEnumIn(roleEnums).stream().collect(Collectors.toSet());
         if (roleEntityList.isEmpty()) {
             throw new IllegalArgumentException("El rol especificado no existe");
         }
@@ -86,22 +86,21 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .username(username)
                 .password(passwordEncoder.encode(password))
                 .roles(roleEntityList)
-                .isEnabled(true)
-                .accountNoLocked(true)
-                .accountNoExpired(true)
-                .credentialNoExpired(true)
                 .build();
         
         UserEntity userSaved = userRepository.save(userEntity);
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         userSaved.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
-        userSaved.getRoles().stream().flatMap(role -> role.getPermissionList().stream()).forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermission_name())));
 
+        List<String> roles = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        
         Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved, null, authorities);
         String accessToken = jwtUtils.createToken(authentication);
 
-        AuthenticationResponse authResponse = new AuthenticationResponse(username, "User created successfully", accessToken, true);
+        AuthenticationResponse authResponse = new AuthenticationResponse(username, "User created successfully", accessToken, true, roles);
         return authResponse;
     }
 
@@ -114,7 +113,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
-        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Inicio de sesión exitoso", accessToken, true);
+        
+        List<String> roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        
+        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Inicio de sesión exitoso", accessToken, true, roles);
         return authResponse;
     }
 

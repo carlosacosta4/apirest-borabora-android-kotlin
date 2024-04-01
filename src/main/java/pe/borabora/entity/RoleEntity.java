@@ -20,11 +20,7 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer role_id;
 
-    @Column(name = "role_name")
+    @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<PermissionEntity> permissionList = new HashSet<>();
 }
