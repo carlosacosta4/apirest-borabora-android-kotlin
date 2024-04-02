@@ -52,18 +52,5 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginRequest userRequest){
         return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);
     }
-    
-    /*
-    @PutMapping("/{userId}")
-	public ResponseEntity<String> updateUserDetails(@PathVariable Integer userId, @RequestBody CreateUser userDetails) {
-		UserEntity userEntity = userDetailsService.getUserById(userId);
-		if (userEntity == null) {
-			return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
-		}
-
-		// Actualiza los detalles del usuario
-		userDetailsService.updateUserDetails(userEntity, userDetails);
-
-		return new ResponseEntity<>("Detalles del usuario actualizados con éxito", HttpStatus.OK);
-	}*/
+        
 }

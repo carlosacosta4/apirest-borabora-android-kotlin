@@ -37,13 +37,13 @@ public class SecurityConfig {
                 	
                     // EndPoints publicos
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
-                    http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").permitAll();         
                     http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
 
                     //EndPoints Privados
-                    //Ejemplo
-                    //http.requestMatchers(HttpMethod.GET, "/categories/**").hasAnyRole("USER");
+                    http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER");
+
 
 
                     http.anyRequest().denyAll();

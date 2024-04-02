@@ -10,9 +10,10 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findUserEntityByUsername(String username);
+
     boolean existsByIdentityDoc(Integer identityDoc);
     boolean existsByUsername(String username);
     
     Optional<UserEntity> findByUsername(String username);
+    Optional<UserEntity> findByIdentityDoc(Integer identityDoc);
 }
