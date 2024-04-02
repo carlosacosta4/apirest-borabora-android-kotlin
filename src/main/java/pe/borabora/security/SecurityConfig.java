@@ -37,12 +37,13 @@ public class SecurityConfig {
                 	
                     // EndPoints publicos
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
 
-                    // EndPoints Privados
-                    http.requestMatchers(HttpMethod.GET, "/method/get").hasAuthority("READ");
-                    http.requestMatchers(HttpMethod.POST, "/method/post").hasAuthority("CREATE");
-                    http.requestMatchers(HttpMethod.DELETE, "/method/delete").hasAuthority("DELETE");
-                    http.requestMatchers(HttpMethod.PUT, "/method/put").hasAuthority("UPDATE");
+                    //EndPoints Privados
+                    //Ejemplo
+                    http.requestMatchers(HttpMethod.GET, "/categories/**").hasAnyRole("ADMIN_FULL");
+
 
                     http.anyRequest().denyAll();
                 })
