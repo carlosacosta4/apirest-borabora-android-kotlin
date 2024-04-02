@@ -32,6 +32,7 @@ public class UserController {
         if (userEntity.isPresent()) {
             UserEntity user = userEntity.get();
             UserResponse userResponse = new UserResponse(
+            	user.getIdentityDoc(),
                 user.getName(),
                 user.getLastname(),
                 user.getCellphone(),

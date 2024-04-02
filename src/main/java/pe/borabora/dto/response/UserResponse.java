@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse {
+	
+	private Integer identityDoc;
     private String name;
     private String lastname;
     private Integer cellphone;
