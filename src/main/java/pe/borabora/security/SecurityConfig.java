@@ -42,7 +42,7 @@ public class SecurityConfig {
 
                     //EndPoints Privados
                     //Ejemplo
-                    http.requestMatchers(HttpMethod.GET, "/categories/**").hasAnyRole("ADMIN_FULL");
+                    //http.requestMatchers(HttpMethod.GET, "/categories/**").hasAnyRole("USER");
 
 
                     http.anyRequest().denyAll();
