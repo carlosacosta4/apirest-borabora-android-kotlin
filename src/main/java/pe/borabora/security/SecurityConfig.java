@@ -37,6 +37,7 @@ public class SecurityConfig {
                 	
                     // EndPoints publicos
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
 
