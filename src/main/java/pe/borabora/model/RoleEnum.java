@@ -4,5 +4,4 @@ public enum RoleEnum {
     ADMIN_FULL,
     ADMIN_BASIC,
     USER,
-    INVITED,
 }
