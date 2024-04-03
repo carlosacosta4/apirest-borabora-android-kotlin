@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.borabora.dto.PurchaseDTO;
 import pe.borabora.entity.Purchase;
 import pe.borabora.service.PurchaseService;
 
@@ -16,10 +17,13 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @PostMapping("/purchase")
-    public ResponseEntity<Purchase> createPurchase(@RequestBody Purchase purchase) {
-        Purchase savedPurchase = purchaseService.savePurchase(purchase);
-        return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);
+    @PostMapping("/purchases")
+    public ResponseEntity<String> createPurchase(@RequestBody PurchaseDTO request) {
+        try {
+            purchaseService.createPurchase(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Purchase created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating purchase: " + e.getMessage());
+        }
     }
 }

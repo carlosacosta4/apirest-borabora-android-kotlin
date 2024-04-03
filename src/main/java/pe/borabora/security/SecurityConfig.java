@@ -43,6 +43,7 @@ public class SecurityConfig {
 
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER");
+                    http.requestMatchers(HttpMethod.POST, "/purchases/**").hasAnyRole("USER");
 
 
 

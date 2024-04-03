@@ -2,8 +2,12 @@ package pe.borabora.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pe.borabora.dto.PurchaseDTO;
 import pe.borabora.entity.*;
+import pe.borabora.repository.PaymentGatewayRepository;
 import pe.borabora.repository.PurchaseRepository;
+import pe.borabora.repository.TypeOrderRepository;
+import pe.borabora.repository.UserRepository;
 import pe.borabora.service.PaymentGatewayService;
 import pe.borabora.service.ProductService;
 import pe.borabora.service.PurchaseService;
@@ -15,62 +19,43 @@ public class PurchaseServiceImpl implements PurchaseService {
     private PurchaseRepository purchaseRepository;
 
     @Autowired
-    private UserDetailServiceImpl userService;
+    private UserRepository userRepository;
 
     @Autowired
-    private PaymentGatewayService paymentGatewayService;
+    private PaymentGatewayRepository paymentGatewayRepository;
 
     @Autowired
-    private TypeOrderService typeOrderService;
+    private TypeOrderRepository typeOrderRepository;
 
-    @Autowired
-    private ProductService productService;
-
-	@Override
-	public Purchase savePurchase(Purchase purchase) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-    /*
     @Override
-    public Purchase savePurchase(Purchase purchase) {
-        // Verificar y asignar el ID del usuario
-        if (purchase.getUser() != null && purchase.getUser().getIdentity_doc() != null) {
-            Integer userId = purchase.getUser().getIdentity_doc();
-            UserEntity user = userService.getUserById(userId);
-            if (user != null) {
-                purchase.getUser().setIdentity_doc(userId); // Asignar solo el ID del usuario
-            }
-        }
+    public void createPurchase(PurchaseDTO request) {
+        Purchase purchase = new Purchase();
+        purchase.setTotal(request.getTotal());
+        purchase.setIgv(request.getIgv());
+        purchase.setSubtotal(request.getSubtotal());
+        purchase.setPurchaseDate(request.getPurchaseDate());
 
-        // Verificar y asignar el método de pago
-        if (purchase.getPayment() != null && purchase.getPayment().getPayment_id() != null) {
-            PaymentGateway paymentGateway = paymentGatewayService.getPaymentById(purchase.getPayment().getPayment_id());
-            if (paymentGateway != null) {
-                purchase.setPayment(paymentGateway);
-            }
-        }
+        // Obtener y establecer UserEntity
+        UserEntity user = userRepository.findByIdentityDoc(request.getIdentityDoc())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        purchase.setUser(user);
 
-        // Verificar y asignar el tipo de orden
-        if (purchase.getOrder() != null && purchase.getOrder().getType_order_id() != null) {
-            TypeOrder typeOrder = typeOrderService.getTypeOrderById(purchase.getOrder().getType_order_id());
-            if (typeOrder != null) {
-                purchase.setOrder(typeOrder);
-            }
-        }
+        // Obtener y establecer PaymentGateway
+        PaymentGateway payment = paymentGatewayRepository.findById(request.getPaymentId())
+                .orElseThrow(() -> new RuntimeException("PaymentGateway not found"));
+        purchase.setPayment(payment);
 
-        // Verificar y asignar los productos
-        if (purchase.getProducts() != null && !purchase.getProducts().isEmpty()) {
-            for (Product product : purchase.getProducts()) {
-                Product existingProduct = productService.getProductById(product.getId_product());
-                if (existingProduct != null) {
-                    purchase.getProducts().add(existingProduct);
-                }
-            }
-        }
+        // Obtener y establecer TypeOrder
+        TypeOrder order = typeOrderRepository.findById(request.getTypeOrderId())
+                .orElseThrow(() -> new RuntimeException("TypeOrder not found"));
+        purchase.setOrder(order);
 
-        return purchaseRepository.save(purchase);
-    }*/
+        // Guardar Purchase en la base de datos
+        purchaseRepository.save(purchase);
+
+        // Para los productos, puedes manejarlos de manera similar
+        for (Integer productId : request.getProductIds()) {
+            // Aquí puedes hacer lo necesario para manejar los productos
+        }
+    }
 }
