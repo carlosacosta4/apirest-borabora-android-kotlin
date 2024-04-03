@@ -15,7 +15,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     private PurchaseRepository purchaseRepository;
 
     @Autowired
-    private UserDetailsServiceImpl userService;
+    private UserDetailServiceImpl userService;
 
     @Autowired
     private PaymentGatewayService paymentGatewayService;
@@ -26,7 +26,14 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private ProductService productService;
 
+	@Override
+	public Purchase savePurchase(Purchase purchase) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+
+    /*
     @Override
     public Purchase savePurchase(Purchase purchase) {
         // Verificar y asignar el ID del usuario
@@ -65,5 +72,5 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         return purchaseRepository.save(purchase);
-    }
+    }*/
 }

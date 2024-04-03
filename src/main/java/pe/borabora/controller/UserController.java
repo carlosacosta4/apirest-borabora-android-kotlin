@@ -1,84 +1,76 @@
 package pe.borabora.controller;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import pe.borabora.dto.CreateUser;
-import pe.borabora.entity.RoleEntity;
+import pe.borabora.dto.request.UserRequest;
+import pe.borabora.dto.response.ApiResponse;
+import pe.borabora.dto.response.UserResponse;
 import pe.borabora.entity.UserEntity;
-import pe.borabora.model.ERole;
-import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
-import pe.borabora.service.impl.UserDetailsServiceImpl;
-
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserRepository userRepository;
     
-    @Autowired
-    private RoleRepository roleRepository;
-	
-	//Crear Usuario
-	@PostMapping("/createUser")
-	public ResponseEntity<?> createUser(@Valid @RequestBody CreateUser createUser){
+    @GetMapping("/findUser/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username){
+        Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+        if (userEntity.isPresent()) {
+            UserEntity user = userEntity.get();
+            UserResponse userResponse = new UserResponse(
+            	user.getIdentityDoc(),
+                user.getName(),
+                user.getLastname(),
+                user.getCellphone(),
+                user.getEmail(),
+                user.getUsername()
+            );
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        } else {
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.setMessage("No existe un usuario con el nombre de usuario proporcionado");
+            apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
 
-	    Set<RoleEntity> roles = createUser.getRoles().stream()
-	            .map(role -> roleRepository.findByName(ERole.valueOf(role))
-	                    .orElseThrow(() -> new RuntimeException("Error: Role is not found.")))
-	            .collect(Collectors.toSet());
-
-	    UserEntity userEntity = UserEntity.builder()
-	            .identity_doc(createUser.getIdentity_doc())
-	            .name(createUser.getName())
-	            .lastname(createUser.getLastname())
-	            .cellphone(createUser.getCellphone())
-	            .email(createUser.getEmail())
-	            .username(createUser.getUsername())
-	            .password(passwordEncoder.encode(createUser.getPassword()))            
-	            .roles(roles)
-	            .build();
-
-	    userRepository.save(userEntity);
-
-	    return ResponseEntity.ok(userEntity);
-	}
-	
-	/*
-	Eliminar Usuario
-	@DeleteMapping("/deleteUser")
-    public String deleteUser(@RequestParam String id){
-        userRepository.deleteById(Long.parseLong(id));
-        return "Se ha borrado el user con id".concat(id);
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        }
     }
-    */
+    
+    @PutMapping("/updateUser/{identityDoc}")
+    public ResponseEntity<?> updateUser(@PathVariable Integer identityDoc, @RequestBody @Valid UserRequest userRequest){
+        Optional<UserEntity> userEntity = userRepository.findByIdentityDoc(identityDoc);
+        if (userEntity.isPresent()) {
+            UserEntity user = userEntity.get();
 
-	@PutMapping("/{userId}")
-	public ResponseEntity<String> updateUserDetails(@PathVariable Integer userId, @RequestBody CreateUser userDetails) {
-		UserEntity userEntity = userDetailsService.getUserById(userId);
-		if (userEntity == null) {
-			return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
-		}
+            user.setName(userRequest.getName());
+            user.setLastname(userRequest.getLastname());
+            user.setCellphone(userRequest.getCellphone());
+            user.setEmail(userRequest.getEmail());
+            user.setUsername(userRequest.getUsername());
+            user.setPassword(userRequest.getPassword());
+            
+            userRepository.save(user);
 
-		// Actualiza los detalles del usuario
-		userDetailsService.updateUserDetails(userEntity, userDetails);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.setMessage("No existe un usuario con el documento de identidad proporcionado");
+            apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
 
-		return new ResponseEntity<>("Detalles del usuario actualizados con éxito", HttpStatus.OK);
-	}
-}    
-
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        }
+    }
+}

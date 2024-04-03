@@ -1,24 +1,18 @@
 package pe.borabora.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import pe.borabora.model.ERole;
+import jakarta.persistence.*;
+import lombok.*;
+import pe.borabora.model.RoleEnum;
 
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 @Table(name = "role")
 public class RoleEntity {
 
@@ -26,6 +20,7 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer role_id;
 
+    @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    private ERole name;
+    private RoleEnum roleEnum;
 }

@@ -10,7 +10,9 @@ public class ApiBoraBoraMovilKotlinApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiBoraBoraMovilKotlinApplication.class, args);
 		
-		System.out.println(new BCryptPasswordEncoder().encode("12345"));
+		//Imprimir contraseña encriptada en consola 
+		//Contraseña: 1234
+		//System.out.println(new BCryptPasswordEncoder().encode("12345"));
 	}
 
 }
