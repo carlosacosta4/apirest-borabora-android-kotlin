@@ -44,4 +44,31 @@ public class CategoryServiceImpl implements CategoryService {
 
         return savedCategoryDTO;
     }
+
+    @Override
+    public CategoryDTO updateCategory(Integer id, CategoryDTO categoryDTO) {
+        // Verificar si la categoría existe
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
+
+        // Actualizar los datos de la categoría existente con los nuevos datos
+        existingCategory.setName(categoryDTO.getName());
+        existingCategory.setImage(categoryDTO.getImage());
+
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return convertToDTO(updatedCategory);
+    }
+
+    @Override
+    public void deleteCategory(Integer id) {
+
+    }
+
+    private CategoryDTO convertToDTO(Category category) {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId_category(category.getId_category());
+        categoryDTO.setName(category.getName());
+        categoryDTO.setImage(category.getImage());
+        return categoryDTO;
+    }
 }

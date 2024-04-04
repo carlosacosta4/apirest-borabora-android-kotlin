@@ -8,6 +8,11 @@ import java.util.List;
 public interface CategoryService {
     CategoryDTO findCategoryById(Integer categoryId);
     List<Category> getAllCategories();
-    //crear categoria - solo ADMIN
+
+    //solo ADMIN- crear, actualizar y borrar categoria:
     CategoryDTO createCategory(CategoryDTO categoryDTO);
+
+    CategoryDTO updateCategory(Integer id, CategoryDTO categoryDTO);
+
+    void deleteCategory(Integer id);
 }
