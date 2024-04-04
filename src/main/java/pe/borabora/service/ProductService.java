@@ -16,5 +16,5 @@ public interface ProductService {
 
     ProductDTO updateProduct(Integer id, ProductDTO productDTO);
 
-    boolean deleteProduct(Integer id);
+    void deleteProduct(Integer id);
 }

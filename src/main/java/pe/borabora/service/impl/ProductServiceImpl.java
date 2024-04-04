@@ -103,7 +103,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean deleteProduct(Integer id) {
-        return false;
+    public void deleteProduct(Integer id) {
+        // Verificar si el producto existe
+        Product existingProduct = productRepository.findById(id).orElse(null);
+        if (existingProduct != null) {
+            productRepository.delete(existingProduct);
+        }
     }
+
 }

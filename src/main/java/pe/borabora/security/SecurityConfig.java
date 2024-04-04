@@ -49,6 +49,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.DELETE, "/categories/delete/{id}").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.POST, "/products/createProduct").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.PUT, "/products/update/{id}").hasAnyRole("ADMIN_BASIC");
+                    http.requestMatchers(HttpMethod.DELETE, "/products/delete/{id}").hasAnyRole("ADMIN_BASIC");
 
                     http.anyRequest().denyAll();
                 })
