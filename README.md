@@ -1,21 +1,25 @@
-# API REST - Bodega BoraBora - APP Móvil Kotlin
 
-![Spring Boot 3.1](https://img.shields.io/badge/Spring%20Boot-3.1.0-brightgreen.svg)
-![Mysql 8.0](https://img.shields.io/badge/Mysql-8.0-blue.svg)
-![JDK 17](https://img.shields.io/badge/JDK-17-brightgreen.svg)
-![Maven](https://img.shields.io/badge/Maven-3.8.6-yellowgreen.svg)
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=35&pause=1000&color=F7F7F7&background=FF000000&random=false&width=550&lines=API+REST+-+Bodega+BoraBora;+APP+M%C3%B3vil+-+Kotlin" alt="Typing SVG" /></a>
 
-<br>
 
-## Repositorios relacionados
-
-[API-REST-BoraBora-Kotlin](https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin) &nbsp;| &nbsp; [AppBoraBora-Kotlin](https://github.com/brigittev0/AppBoraMovil) &nbsp;| &nbsp; [Resources-API](https://github.com/CarlosAcosta4/resources-apis-borabora) &nbsp;
-
-Por favor, consulta los repositorios correspondientes para obtener instrucciones sobre cómo configurar y utilizar estas aplicaciones.
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.0-brightgreen)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-6-brightgreen)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
+![JDK](https://img.shields.io/badge/JDK-17-orange)
+![Maven](https://img.shields.io/badge/Maven-3.8.6-red)
+![java-jwt](https://img.shields.io/badge/java--jwt-4.2.1-green)
 
 <br>
 
-## Pre-requisitos
+## 📌 Repositorios relacionados
+
+[API-REST-BoraBora-Kotlin](https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin) &nbsp;| &nbsp; [AppBoraBora-Kotlin](https://github.com/brigittev0/AppBoraMovil) &nbsp;| &nbsp; [Scripts SQL-API](https://github.com/CarlosAcosta4/resources-apis-borabora) &nbsp;
+
+Por favor, consulta los repositorios correspondientes para obtener sus instrucciones.
+
+<br>
+
+## 📑 Pre-requisitos
 
 Antes de ejecutar este proyecto, debes asegurarte de que:
 
@@ -28,7 +32,7 @@ Antes de ejecutar este proyecto, debes asegurarte de que:
 
 <br>
 
-## Ejecución
+## 🔢 Ejecución
 
 Para ejecutar este proyecto en Spring Tool Suite (STS), sigue estos pasos:
 
@@ -41,26 +45,45 @@ Para ejecutar este proyecto en Spring Tool Suite (STS), sigue estos pasos:
 
 <br>
 
-## Inserción de datos
+## ❗ Detalles Importantes del Proyecto
+- **Algoritmo de Encriptación del Token**: Este proyecto utiliza el algoritmo HS256 para la encriptación del token.
+- **Duración del Token**: El token generado tiene una duración de 30 minutos.
+
+<br>
+
+## 📋 Inserción de datos
 Una vez que las tablas se han creado en la base de datos, puedes utilizar los scripts SQL disponibles en este [repositorio](https://github.com/CarlosAcosta4/resources-apis-borabora) para insertar datos.
 
 <br>
 
 <div align="center">
   
-## Arquitectura
+## 🔹 Arquitectura del Proyecto Bodega BoraBora
 ![Arquitectura](./src/main/img/Arquitectura.png)
 
 <br>
 
-## Diagrama Conceptual
+## 🔸 Diagrama de Flujo de Autenticación y Autorización JWT con Spring Security
+![DiagramaSecurityJWT](./src/main/img/DiagramaSecurityJWT.png)
+
+<br>
+
+## 🔹 Diagrama Conceptual de la Base de Datos
 ![Conceptual](./src/main/img/Conceptual.png)
 
 <br>
 
-## Diagrama Físico
+## 🔸 Diagrama Físico de la Base de Datos
 ![Fisico](./src/main/img/Fisico.png)
-
 </div>
+
+<br>
+
+## 👥 Autores
+<a href="https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CarlosAcosta4/apirest-borabora-android-kotlin" />
+</a>
+
+<p align="right">(<a href="#readme-top">volver arriba</a>)</p>
 
 
