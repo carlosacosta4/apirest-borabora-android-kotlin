@@ -1,5 +1,5 @@
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=35&pause=1000&color=F7F7F7&background=FF000000&random=false&width=550&lines=API+REST+-+Bodega+BoraBora;+APP+M%C3%B3vil+-+Kotlin" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=43&pause=1000&color=D3D302&random=false&width=680&height=60&lines=API+REST+-+Bodega+BoraBora;APP+M%C3%B3vil+-+Kotlin" alt="Typing SVG" /></a>
 
 
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.0-brightgreen)
