@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.borabora.dto.CategoryDTO;
 import pe.borabora.entity.Category;
+import pe.borabora.entity.Product;
 import pe.borabora.repository.CategoryRepository;
+import pe.borabora.repository.ProductRepository;
 import pe.borabora.service.CategoryService;
 
 import java.util.List;
@@ -13,6 +15,9 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
     @Override
     public CategoryDTO findCategoryById(Integer categoryId) {
         Category category = categoryRepository.findById(categoryId).orElse(null);
@@ -60,8 +65,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(Integer id) {
+    public boolean deleteCategory(Integer id) {
+        Category existingCategory = categoryRepository.findById(id)
+                .orElse(null);
 
+        if (existingCategory != null) {
+            // Eliminar todos los productos asociados a la categoría
+            List<Product> productsToDelete = productRepository.findByCategoryId(id);
+            productRepository.deleteAll(productsToDelete);
+
+            // Eliminar la categoría
+            categoryRepository.delete(existingCategory);
+            return true; // La categoría y productos asociados eliminados
+        } else {
+            return false; // La categoría no existe
+        }
     }
 
     private CategoryDTO convertToDTO(Category category) {

@@ -46,6 +46,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/purchases/**").hasAnyRole("USER");
                     http.requestMatchers(HttpMethod.POST, "/categories/createCategory").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.PUT, "/categories/update/{idCategoria}").hasAnyRole("ADMIN_BASIC");
+                    http.requestMatchers(HttpMethod.DELETE, "/categories/delete/{id}").hasAnyRole("ADMIN_BASIC");
 
 
                     http.anyRequest().denyAll();

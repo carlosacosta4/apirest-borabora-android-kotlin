@@ -53,4 +53,14 @@ public class CategoryController {
         CategoryDTO updatedCategory = categoryService.updateCategory(idCategoria, categoryDTO);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
+        boolean deleted = categoryService.deleteCategory(id);
+        if (deleted) {
+            return new ResponseEntity<>("Categoría eliminada", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Categoría no encontrada", HttpStatus.NOT_FOUND);
+        }
+    }
 }

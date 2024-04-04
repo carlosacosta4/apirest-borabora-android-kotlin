@@ -14,5 +14,5 @@ public interface CategoryService {
 
     CategoryDTO updateCategory(Integer id, CategoryDTO categoryDTO);
 
-    void deleteCategory(Integer id);
+    boolean deleteCategory(Integer id);
 }
