@@ -34,9 +34,6 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "brand", length = 100)
-    private String brand;
-
     @Column(name = "price")
     private Double price;
 

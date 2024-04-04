@@ -3,7 +3,11 @@ package pe.borabora.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.borabora.dto.ProductDTO;
+import pe.borabora.entity.BrandProduct;
+import pe.borabora.entity.Category;
 import pe.borabora.entity.Product;
+import pe.borabora.repository.BrandProductRepository;
+import pe.borabora.repository.CategoryRepository;
 import pe.borabora.repository.ProductRepository;
 import pe.borabora.service.ProductService;
 
@@ -16,6 +20,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private BrandProductRepository brandProductRepository;
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepository.findAll();
@@ -52,5 +61,42 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Integer productId) {
         return productRepository.findById(productId).orElse(null);
+    }
+
+    // Método para mapear un DTO de producto a una entidad Product
+    private void mapDtoToProduct(Product product, ProductDTO productDTO) {
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
+        product.setExpirationDate(productDTO.getExpirationDate());
+        product.setImage(productDTO.getImage());
+
+        // Obtener la categoría del DTO y actualizarla en el producto
+        Category category = categoryRepository.findById(productDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + productDTO.getCategoryId()));
+        product.setCategory(category);
+
+        BrandProduct brand = brandProductRepository.findById(productDTO.getBrandProductId())
+                .orElseThrow(() -> new RuntimeException("Marca no encontrada con ID: " + productDTO.getBrandProductId()));
+        product.setBrandproduct(brand);
+    }
+    @Override
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = new Product();
+        // Mapear los datos del DTO a la entidad Product
+        mapDtoToProduct(product, productDTO);
+        Product savedProduct = productRepository.save(product);
+        return new ProductDTO(savedProduct);
+    }
+
+    @Override
+    public ProductDTO updateProduct(Integer id, ProductDTO productDTO) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteProduct(Integer id) {
+        return false;
     }
 }

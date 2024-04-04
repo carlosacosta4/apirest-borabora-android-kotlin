@@ -39,4 +39,10 @@ public class ProductController {
         List<ProductDTO> topSellingProducts = productService.getTopSellingProducts(limit);
         return new ResponseEntity<>(topSellingProducts, HttpStatus.OK);
     }
+    //Crear Producto
+    @PostMapping("/createProduct")
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+        ProductDTO createdProduct = productService.createProduct(productDTO);
+        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    }
 }

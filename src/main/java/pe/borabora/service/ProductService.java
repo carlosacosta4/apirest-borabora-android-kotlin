@@ -11,4 +11,10 @@ public interface ProductService {
     List<ProductDTO> getTopSellingProducts(int limit);
 
     Product getProductById(Integer productId);
+
+    ProductDTO createProduct(ProductDTO productDTO);
+
+    ProductDTO updateProduct(Integer id, ProductDTO productDTO);
+
+    boolean deleteProduct(Integer id);
 }
