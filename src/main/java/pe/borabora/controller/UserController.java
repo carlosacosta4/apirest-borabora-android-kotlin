@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import pe.borabora.dto.request.UserRequest;
+import pe.borabora.dto.request.UpdateUserRequest;
 import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.dto.response.UserResponse;
 import pe.borabora.entity.UserEntity;
@@ -50,21 +50,34 @@ public class UserController {
     }
     
     @PutMapping("/updateUser/{identityDoc}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer identityDoc, @RequestBody @Valid UserRequest userRequest){
+    public ResponseEntity<?> updateUser(@PathVariable Integer identityDoc, @RequestBody @Valid UpdateUserRequest updateUserRequest){
         Optional<UserEntity> userEntity = userRepository.findByIdentityDoc(identityDoc);
         if (userEntity.isPresent()) {
             UserEntity user = userEntity.get();
 
-            user.setName(userRequest.getName());
-            user.setLastname(userRequest.getLastname());
-            user.setCellphone(userRequest.getCellphone());
-            user.setEmail(userRequest.getEmail());
-            user.setUsername(userRequest.getUsername());
-            user.setPassword(userRequest.getPassword());
+            Optional<UserEntity> existingUser = userRepository.findByUsername(updateUserRequest.getUsername());
+            if (existingUser.isPresent() && !existingUser.get().getIdentityDoc().equals(identityDoc)) {
+                ApiResponse apiResponse = new ApiResponse();
+                apiResponse.setMessage("El nombre de usuario ya está en uso");
+                apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+
+                return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+            }
+
+            user.setName(updateUserRequest.getName());
+            user.setLastname(updateUserRequest.getLastname());
+            user.setCellphone(updateUserRequest.getCellphone());
+            user.setEmail(updateUserRequest.getEmail());
+            user.setUsername(updateUserRequest.getUsername());
+            
             
             userRepository.save(user);
 
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.setMessage("Usuario actualizado correctamente");
+            apiResponse.setStatus(HttpStatus.OK.value());
+
+            return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         } else {
             ApiResponse apiResponse = new ApiResponse();
             apiResponse.setMessage("No existe un usuario con el documento de identidad proporcionado");
