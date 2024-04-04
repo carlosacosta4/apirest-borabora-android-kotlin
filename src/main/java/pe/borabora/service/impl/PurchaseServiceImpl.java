@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.borabora.dto.PurchaseDTO;
 import pe.borabora.entity.*;
-import pe.borabora.repository.PaymentGatewayRepository;
-import pe.borabora.repository.PurchaseRepository;
-import pe.borabora.repository.TypeOrderRepository;
-import pe.borabora.repository.UserRepository;
+import pe.borabora.repository.*;
 import pe.borabora.service.PaymentGatewayService;
 import pe.borabora.service.ProductService;
 import pe.borabora.service.PurchaseService;
 import pe.borabora.service.TypeOrderService;
+
+import java.util.Optional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -26,6 +25,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Autowired
     private TypeOrderRepository typeOrderRepository;
+
+    @Autowired
+    private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private PickUpRepository pickUpRepository;
 
     @Override
     public void createPurchase(PurchaseDTO request) {
@@ -45,10 +50,27 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .orElseThrow(() -> new RuntimeException("PaymentGateway not found"));
         purchase.setPayment(payment);
 
-        // Obtener y establecer TypeOrder
-        TypeOrder order = typeOrderRepository.findById(request.getTypeOrderId())
-                .orElseThrow(() -> new RuntimeException("TypeOrder not found"));
+        // Verificar si es una entrega (Delivery) o una recogida (PickUp) según el ID del pedido
+        TypeOrder order;
+        if (request.getOrderId() != null) {
+            // Buscar el pedido correspondiente en la base de datos
+            Optional<Delivery> deliveryOptional = deliveryRepository.findById(request.getOrderId());
+            if (deliveryOptional.isPresent()) {
+                order = deliveryOptional.get();
+            } else {
+                Optional<PickUp> pickUpOptional = pickUpRepository.findById(request.getOrderId());
+                if (pickUpOptional.isPresent()) {
+                    order = pickUpOptional.get();
+                } else {
+                    throw new RuntimeException("Order not found");
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Order ID is required");
+        }
+
         purchase.setOrder(order);
+
 
         // Guardar Purchase en la base de datos
         purchaseRepository.save(purchase);

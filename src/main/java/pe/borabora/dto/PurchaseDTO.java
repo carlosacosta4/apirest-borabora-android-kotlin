@@ -15,7 +15,7 @@ public class PurchaseDTO {
     private Double subtotal;
     private LocalDate purchaseDate;
     private Integer paymentId;
-    private Integer typeOrderId;
+    private Integer orderId;
     private Integer identityDoc;
     private List<Integer> productIds;
 }
