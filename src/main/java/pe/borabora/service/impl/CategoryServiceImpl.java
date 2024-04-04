@@ -26,4 +26,22 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        category.setImage(categoryDTO.getImage());
+
+        // Guardar la categoría en la base de datos
+        Category savedCategory = categoryRepository.save(category);
+
+        // Devolver el DTO de la categoría creada
+        CategoryDTO savedCategoryDTO = new CategoryDTO();
+        savedCategoryDTO.setId_category(savedCategory.getId_category());
+        savedCategoryDTO.setName(savedCategory.getName());
+        savedCategoryDTO.setImage(savedCategory.getImage());
+
+        return savedCategoryDTO;
+    }
 }

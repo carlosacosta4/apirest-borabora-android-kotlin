@@ -8,4 +8,6 @@ import java.util.List;
 public interface CategoryService {
     CategoryDTO findCategoryById(Integer categoryId);
     List<Category> getAllCategories();
+    //crear categoria - solo ADMIN
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 }
