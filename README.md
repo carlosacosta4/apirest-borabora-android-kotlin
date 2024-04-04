@@ -1,3 +1,4 @@
+<a name="readme-top"></a>
 
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=43&pause=1000&color=D3D302&random=false&width=680&height=60&lines=API+REST+-+Bodega+BoraBora;APP+M%C3%B3vil+-+Kotlin" alt="Typing SVG" /></a>
 
@@ -79,7 +80,7 @@ Una vez que las tablas se han creado en la base de datos, puedes utilizar los sc
 
 <br>
 
-## 👥 Autores
+## 💻 Autores
 <a href="https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=CarlosAcosta4/apirest-borabora-android-kotlin" />
 </a>
