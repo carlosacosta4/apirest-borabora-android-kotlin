@@ -92,7 +92,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO updateProduct(Integer id, ProductDTO productDTO) {
-        return null;
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+
+        // Actualizar los datos del producto con los nuevos datos del DTO
+        mapDtoToProduct(existingProduct, productDTO);
+        // Guardar el producto actualizado en la base de datos
+        Product updatedProduct = productRepository.save(existingProduct);
+        return new ProductDTO(updatedProduct);
     }
 
     @Override
