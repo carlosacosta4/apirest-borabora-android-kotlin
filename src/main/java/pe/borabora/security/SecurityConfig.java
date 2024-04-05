@@ -40,6 +40,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").permitAll();         
                     http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/brand/**").permitAll();
 
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER");
