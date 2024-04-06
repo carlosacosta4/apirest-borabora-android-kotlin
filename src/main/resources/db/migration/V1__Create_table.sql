@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `bd_borabora`.`product` (
   `id_product` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `expiration_date` DATE NULL DEFAULT NULL,
-  `image` VARCHAR(255) NULL DEFAULT NULL,
+  `image` LONGTEXT NULL DEFAULT NULL,  -- Modificado aquí
   `name` VARCHAR(180) NULL DEFAULT NULL,
   `price` DOUBLE NULL DEFAULT NULL,
   `stock` INT NULL DEFAULT NULL,

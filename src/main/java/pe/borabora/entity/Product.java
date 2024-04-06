@@ -44,7 +44,9 @@ public class Product implements Serializable {
     @Column(name = "expirationDate")
     private LocalDate expirationDate;
 
-    @Column(name = "image")
+    //ya que almacenará la img en base64 necesita más espacio
+    @Column(name = "image", columnDefinition = "LONGTEXT")
+    @Lob
     private String image;
 
     @ManyToOne 
