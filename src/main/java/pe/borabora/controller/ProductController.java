@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.borabora.dto.ProductDTO;
+import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.service.ProductService;
 
 import java.util.List;
@@ -41,9 +42,14 @@ public class ProductController {
     }
     //Crear Producto
     @PostMapping("/createProduct")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ApiResponse> createProduct(@RequestBody ProductDTO productDTO) {
         ProductDTO createdProduct = productService.createProduct(productDTO);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setMessage("Producto creado correctamente");
+        apiResponse.setStatus(HttpStatus.CREATED.value());
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")

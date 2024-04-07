@@ -56,17 +56,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new User(userEntity.getUsername(), userEntity.getPassword(), true, true, true, true, authorityList);
     }
 
-    public AuthenticationResponse createUser(CreateUserRequest createRoleRequest) {
+    public AuthenticationResponse createUser(CreateUserRequest createUserRequest) {
 
-    	String username = createRoleRequest.getUsername();
-        String password = createRoleRequest.getPassword();
-        Integer identity_doc = createRoleRequest.getIdentity_doc();
-        String name = createRoleRequest.getName();
-        String lastname = createRoleRequest.getLastname();
-        Integer cellphone = createRoleRequest.getCellphone();
-        String email = createRoleRequest.getEmail();
+    	String username = createUserRequest.getUsername();
+        String password = createUserRequest.getPassword();
+        Integer identity_doc = createUserRequest.getIdentity_doc();
+        String name = createUserRequest.getName();
+        String lastname = createUserRequest.getLastname();
+        Integer cellphone = createUserRequest.getCellphone();
+        String email = createUserRequest.getEmail();
         
-        List<String> rolesRequest = createRoleRequest.getRoleRequest().getRoleListName();
+        List<String> rolesRequest = createUserRequest.getRoleRequest().getRoleListName();
 
         List<RoleEnum> roleEnums = rolesRequest.stream()
             .map(role -> RoleEnum.valueOf(role.toUpperCase()))
@@ -100,7 +100,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(userSaved, null, authorities);
         String accessToken = jwtUtils.createToken(authentication);
 
-        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Usuario creado exitosamente", accessToken, true, roles);
+        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Usuario creado exitosamente", accessToken, true, roles, identity_doc);
         return authResponse;
     }
 
@@ -117,8 +117,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
         List<String> roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        
-        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Inicio de sesión exitoso", accessToken, true, roles);
+
+        // Obtener identityDoc del UserEntity
+        UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
+        Integer identityDoc = userEntity.getIdentityDoc();
+
+        AuthenticationResponse authResponse = new AuthenticationResponse(username, "Inicio de sesión exitoso", accessToken, true, roles, identityDoc);
         return authResponse;
     }
 
