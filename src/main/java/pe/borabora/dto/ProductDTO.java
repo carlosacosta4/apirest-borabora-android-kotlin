@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
-    private Integer idProduct;
     private String name;
     private String description;
     private Double price;
@@ -23,7 +22,6 @@ public class ProductDTO {
 
     // Constructor que convierte un objeto Product en ProductDTO
     public ProductDTO(Product product) {
-        this.idProduct = product.getId_product();
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
