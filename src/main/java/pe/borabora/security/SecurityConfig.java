@@ -41,6 +41,7 @@ public class SecurityConfig {
 
                     http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/brand/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/topSelling").permitAll();
 
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER");
