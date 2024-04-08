@@ -19,6 +19,7 @@ public class ProductDTO {
     private String image;
     private Integer categoryId;
     private Integer brandProductId;
+    private Boolean deleted;
 
     // Constructor que convierte un objeto Product en ProductDTO
     public ProductDTO(Product product) {

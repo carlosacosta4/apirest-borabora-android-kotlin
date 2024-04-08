@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p, COUNT(pp) AS totalSold FROM Product p JOIN p.purchases pp GROUP BY p ORDER BY totalSold DESC")
     List<Object[]> findTopSellingProducts();
 
+    @Query("SELECT p FROM Product p WHERE p.deleted = false")
+    List<Product> findAllByDeletedFalse();
 }

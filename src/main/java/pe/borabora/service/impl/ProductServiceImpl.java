@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     private BrandProductRepository brandProductRepository;
     @Override
     public List<ProductDTO> getAllProducts() {
-        List<Product> productList = productRepository.findAll();
+        List<Product> productList = productRepository.findAllByDeletedFalse();
         return productList.stream()
                 .map(ProductDTO::new)
                 .collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStock(productDTO.getStock());
         product.setExpirationDate(productDTO.getExpirationDate());
         product.setImage(productDTO.getImage());
-
+        product.setDeleted(productDTO.getDeleted());
         // Obtener la categoría del DTO y actualizarla en el producto
         Category category = categoryRepository.findById(productDTO.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + productDTO.getCategoryId()));
