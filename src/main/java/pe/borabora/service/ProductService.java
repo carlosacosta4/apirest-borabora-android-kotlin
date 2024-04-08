@@ -10,7 +10,7 @@ public interface ProductService {
     List<ProductDTO> getProductsByCategoryId(Integer categoryId);
     List<ProductDTO> getTopSellingProducts(int limit);
 
-    Product getProductById(Integer productId);
+    ProductDTO getProductById(Integer productId);
 
     ProductDTO createProduct(ProductDTO productDTO);
 

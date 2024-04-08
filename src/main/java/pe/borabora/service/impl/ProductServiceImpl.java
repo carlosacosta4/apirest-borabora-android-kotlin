@@ -59,8 +59,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer productId) {
-        return productRepository.findById(productId).orElse(null);
+    public ProductDTO getProductById(Integer productId) {
+        Product product = productRepository.findById(productId).orElse(null);
+        return new ProductDTO(product);
     }
 
     // Método para mapear un DTO de producto a una entidad Product
