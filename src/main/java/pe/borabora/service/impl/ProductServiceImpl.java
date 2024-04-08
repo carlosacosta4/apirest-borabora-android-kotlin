@@ -108,7 +108,9 @@ public class ProductServiceImpl implements ProductService {
         // Verificar si el producto existe
         Product existingProduct = productRepository.findById(id).orElse(null);
         if (existingProduct != null) {
-            productRepository.delete(existingProduct);
+            // No eliminar realmente el producto, solo marcarlo como eliminado
+            existingProduct.setDeleted(true);
+            productRepository.save(existingProduct);
         }
     }
 

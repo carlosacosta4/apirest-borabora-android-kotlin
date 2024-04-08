@@ -216,7 +216,9 @@ AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
+-- aumento de campo deleted - en false ya que pasara en true cuando se elimine(deje de usar) un producto
+ALTER TABLE `bd_borabora`.`product`
+ADD COLUMN `deleted` BOOLEAN NOT NULL DEFAULT FALSE;
 -- -----------------------------------------------------
 -- Table `bd_borabora`.`user`
 -- -----------------------------------------------------
