@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(Integer productId) {
-        Product product = productRepository.findById(productId).orElse(null);
+        Product product = productRepository.findByIdAndDeletedFalse(productId).orElse(null);
         return new ProductDTO(product);
     }
 
