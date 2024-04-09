@@ -1,6 +1,8 @@
 package pe.borabora.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.borabora.dto.ProductDTO;
 import pe.borabora.entity.BrandProduct;
@@ -43,19 +45,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> getTopSellingProducts(int limit) {
-        List<Object[]> results = productRepository.findTopSellingProducts();
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Object[]> results = productRepository.findTopSellingProducts(pageable);
         List<ProductDTO> topSellingProducts = new ArrayList<>();
 
         for (Object[] result : results) {
             Product product = (Product) result[0];
             topSellingProducts.add(new ProductDTO(product));
-            if (topSellingProducts.size() >= limit) {
-                break;
-            }
         }
 
         return topSellingProducts;
-
     }
 
     @Override
