@@ -87,14 +87,14 @@ public class UserController {
         }
     }
 
-    //actualizar contraseña
+  //actualizar contraseña
     @PostMapping("/updatePassword")
-    public ResponseEntity<Boolean> updatePassword(@RequestBody PasswordUpdateRequest request) {
-        boolean success = detailService.updatePassword(request);
-        if (success) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
+    public ResponseEntity<ApiResponse> updatePassword(@RequestBody PasswordUpdateRequest request) {
+        ApiResponse response = detailService.updatePassword(request);
+        if (response.getStatus() == HttpStatus.OK.value()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

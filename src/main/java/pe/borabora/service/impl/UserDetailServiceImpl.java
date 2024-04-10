@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import pe.borabora.dto.request.CreateUserRequest;
 import pe.borabora.dto.request.LoginRequest;
 import pe.borabora.dto.request.PasswordUpdateRequest;
+import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.dto.response.AuthenticationResponse;
 import pe.borabora.entity.RoleEntity;
 import pe.borabora.entity.UserEntity;
@@ -149,16 +150,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
     }
 
-    //actualizar contraseña
-    public boolean updatePassword(PasswordUpdateRequest request) {
+  //actualizar contraseña
+    public ApiResponse updatePassword(PasswordUpdateRequest request) {
         Optional<UserEntity> userOptional = userRepository.findByEmailAndCellphoneAndIdentityDoc(request.getEmail(), request.getCellphone(), request.getIdentityDoc());
         if (userOptional.isPresent()) {
             UserEntity user = userOptional.get();
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
             userRepository.save(user);
-            return true;
+            return new ApiResponse("Contraseña actualizada con exito", 200);
         } else {
-            return false;
+            return new ApiResponse("User no encontrado", 404);
         }
     }
 }
