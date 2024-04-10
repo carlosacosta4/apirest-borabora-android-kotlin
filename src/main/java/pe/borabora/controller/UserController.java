@@ -5,19 +5,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import pe.borabora.dto.request.PasswordUpdateRequest;
 import pe.borabora.dto.request.UpdateUserRequest;
 import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.dto.response.UserResponse;
 import pe.borabora.entity.UserEntity;
 import pe.borabora.repository.UserRepository;
+import pe.borabora.service.impl.UserDetailServiceImpl;
 
 @RestController
 @RequestMapping("/user")
@@ -25,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserDetailServiceImpl detailService;
     
     @GetMapping("/findUser/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username){
@@ -84,6 +84,17 @@ public class UserController {
             apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
 
             return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //actualizar contraseña
+    @PostMapping("/updatePassword")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody PasswordUpdateRequest request) {
+        boolean success = detailService.updatePassword(request);
+        if (success) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 }

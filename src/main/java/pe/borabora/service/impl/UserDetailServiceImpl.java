@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import pe.borabora.dto.request.CreateUserRequest;
 import pe.borabora.dto.request.LoginRequest;
+import pe.borabora.dto.request.PasswordUpdateRequest;
 import pe.borabora.dto.response.AuthenticationResponse;
 import pe.borabora.entity.RoleEntity;
 import pe.borabora.entity.UserEntity;
@@ -27,6 +28,7 @@ import pe.borabora.util.JwtUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -138,5 +140,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
         return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+    }
+
+    //actualizar contraseña
+    public boolean updatePassword(PasswordUpdateRequest request) {
+        Optional<UserEntity> userOptional = userRepository.findByEmailAndCellphoneAndIdentityDoc(request.getEmail(), request.getCellphone(), request.getIdentityDoc());
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
