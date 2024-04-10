@@ -26,10 +26,7 @@ import pe.borabora.repository.RoleRepository;
 import pe.borabora.repository.UserRepository;
 import pe.borabora.util.JwtUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,8 +64,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String lastname = createUserRequest.getLastname();
         Integer cellphone = createUserRequest.getCellphone();
         String email = createUserRequest.getEmail();
-        
-        List<String> rolesRequest = createUserRequest.getRoleRequest().getRoleListName();
+
+        //esto es para pasarle el rol
+        /*List<String> rolesRequest = createUserRequest.getRoleRequest().getRoleListName();
 
         List<RoleEnum> roleEnums = rolesRequest.stream()
             .map(role -> RoleEnum.valueOf(role.toUpperCase()))
@@ -77,8 +75,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Set<RoleEntity> roleEntityList = roleRepository.findRoleEntitiesByRoleEnumIn(roleEnums).stream().collect(Collectors.toSet());
         if (roleEntityList.isEmpty()) {
             throw new IllegalArgumentException("El rol especificado no existe");
-        }
-        
+        }*/
+
+        // Find the "user" role
+        RoleEntity userRole = roleRepository.findByRoleEnum(RoleEnum.USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+
+        // asignar user por defecto a cada usuario creado
+        Set<RoleEntity> roleEntityList = new HashSet<>();
+        roleEntityList.add(userRole);
+
+
         UserEntity userEntity = UserEntity.builder()
                 .identityDoc(identity_doc)
                 .name(name)
@@ -87,7 +94,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .email(email)
                 .username(username)
                 .password(passwordEncoder.encode(password))
-                .roles(roleEntityList)
+                .roles(roleEntityList)  //.roles(roleEntityList)
                 .build();
         
         UserEntity userSaved = userRepository.save(userEntity);
