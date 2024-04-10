@@ -196,12 +196,13 @@ CREATE TABLE IF NOT EXISTS `bd_borabora`.`product` (
   `id_product` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `expiration_date` DATE NULL DEFAULT NULL,
-  `image` LONGTEXT NULL DEFAULT NULL,  -- Modificado aquí
+  `image` LONGTEXT NULL DEFAULT NULL,
   `name` VARCHAR(180) NULL DEFAULT NULL,
   `price` DOUBLE NULL DEFAULT NULL,
   `stock` INT NULL DEFAULT NULL,
   `cod_brand_product` INT NOT NULL,
   `id_category` INT NOT NULL,
+  `deleted` BOOLEAN NOT NULL DEFAULT FALSE,  -- Nuevo campo aquí
   PRIMARY KEY (`id_product`),
   INDEX `FKt5p44087wjsrd9pdhpccwjk18` (`cod_brand_product` ASC) VISIBLE,
   INDEX `FK5cxv31vuhc7v32omftlxa8k3c` (`id_category` ASC) VISIBLE,
@@ -215,10 +216,6 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
-
--- aumento de campo deleted - en false ya que pasara en true cuando se elimine(deje de usar) un producto
-ALTER TABLE `bd_borabora`.`product`
-ADD COLUMN `deleted` BOOLEAN NOT NULL DEFAULT FALSE;
 -- -----------------------------------------------------
 -- Table `bd_borabora`.`user`
 -- -----------------------------------------------------

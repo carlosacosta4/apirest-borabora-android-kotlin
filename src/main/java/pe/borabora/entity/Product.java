@@ -62,6 +62,7 @@ public class Product implements Serializable {
     @ManyToMany(mappedBy = "products")
     private Collection<Purchase> purchases = new ArrayList<>();
 
+    @Column(name = "deleted")
     private boolean deleted;
 }
 

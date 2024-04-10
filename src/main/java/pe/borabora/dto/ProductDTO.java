@@ -31,5 +31,6 @@ public class ProductDTO {
         this.image = product.getImage();
         this.categoryId = product.getCategory().getId_category();
         this.brandProductId = product.getBrandproduct().getCod_brand_product();
+        this.deleted = product.isDeleted();
     }
 }
