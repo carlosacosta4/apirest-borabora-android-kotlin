@@ -84,6 +84,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = new Product();
+        // Si el DTO no proporciona un valor para 'deleted', establecerlo a false
+        if (productDTO.getDeleted() == null) {
+            productDTO.setDeleted(false);
+        }
         // Mapear los datos del DTO a la entidad Product
         mapDtoToProduct(product, productDTO);
         Product savedProduct = productRepository.save(product);
