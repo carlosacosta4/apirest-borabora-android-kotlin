@@ -74,11 +74,11 @@ public class ProductServiceImpl implements ProductService {
         product.setDeleted(productDTO.getDeleted());
         // Obtener la categoría del DTO y actualizarla en el producto
         Category category = categoryRepository.findById(productDTO.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + productDTO.getCategoryId()));
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: "));
         product.setCategory(category);
 
         BrandProduct brand = brandProductRepository.findById(productDTO.getBrandProductId())
-                .orElseThrow(() -> new RuntimeException("Marca no encontrada con ID: " + productDTO.getBrandProductId()));
+                .orElseThrow(() -> new RuntimeException("Marca no encontrada con ID: "));
         product.setBrandproduct(brand);
     }
     @Override
