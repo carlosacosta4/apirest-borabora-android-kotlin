@@ -13,7 +13,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 @Entity
-public abstract class TypeOrder {
+public class TypeOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer type_order_id;
