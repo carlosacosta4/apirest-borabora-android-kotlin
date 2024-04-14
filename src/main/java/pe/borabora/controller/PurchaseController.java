@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.borabora.dto.response.ApiResponse;
 import pe.borabora.entity.*;
 import pe.borabora.repository.*;
 import pe.borabora.service.PurchaseService;
@@ -51,7 +52,7 @@ public class PurchaseController {
 
     @PostMapping("/{orderType}")
     @Transactional
-    public ResponseEntity<Purchase> createPurchase(@PathVariable String orderType, @RequestBody Purchase purchase) {
+    public ResponseEntity<ApiResponse> createPurchase(@PathVariable String orderType, @RequestBody Purchase purchase) {
         TypeOrder typeOrder = purchase.getOrder();
 
         if (orderType.equalsIgnoreCase("PICKUP")) {
@@ -76,7 +77,10 @@ public class PurchaseController {
             purchaseProductRepository.save(purchaseProduct);
         }
 
-        return ResponseEntity.ok(savedPurchase);
+        // Crear una nueva ApiResponse con un mensaje y un código de estado
+        ApiResponse apiResponse = new ApiResponse("Compra creada con éxito", HttpStatus.OK.value());
+
+        return ResponseEntity.ok(apiResponse);
     }
 
     private PickUp createPickUpOrder(PickUp pickUp) {

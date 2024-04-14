@@ -60,7 +60,6 @@ public class Product implements Serializable {
     @JsonBackReference("cod_brand_product")
     private BrandProduct brandproduct;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private Collection<Purchase> purchases = new ArrayList<>();
 
