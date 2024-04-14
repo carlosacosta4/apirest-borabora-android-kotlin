@@ -17,7 +17,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 @Entity
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "orderType")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Delivery.class, name = "DELIVERY"),
         @JsonSubTypes.Type(value = PickUp.class, name = "PICKUP")
@@ -27,7 +27,6 @@ public abstract class TypeOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer type_order_id;
 
-    @JsonIgnore
     @Column(name = "type", insertable = false, updatable = false)
     private String type;
 
