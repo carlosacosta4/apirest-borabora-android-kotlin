@@ -1,5 +1,7 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,7 @@ public class Headquarter {
     private String headquarter;
 
     @OneToMany(mappedBy = "headquarter")
+    @JsonManagedReference("pickup-headquarter")
     private Collection<PickUp> pick = new ArrayList<>();
 
 }

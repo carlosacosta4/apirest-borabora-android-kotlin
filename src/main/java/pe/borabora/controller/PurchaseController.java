@@ -1,15 +1,11 @@
 package pe.borabora.controller;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pe.borabora.dto.PurchaseDTO;
-import pe.borabora.entity.Purchase;
+import pe.borabora.entity.*;
+import pe.borabora.repository.*;
 import pe.borabora.service.PurchaseService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/purchases")
@@ -17,13 +13,56 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @PostMapping("/purchases")
-    public ResponseEntity<String> createPurchase(@RequestBody PurchaseDTO request) {
-        try {
-            purchaseService.createPurchase(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Purchase created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating purchase: " + e.getMessage());
+    //---GRUPO 01
+    @Autowired
+    private TypeOrderRepository typeOrderRepository;
+    @Autowired
+    private HeadquarterRepository headquarterRepository;
+    @Autowired
+    private DistrictRepository districtRepository;
+    @Autowired
+    private PickUpRepository pickUpRepository;
+    @Autowired
+    private DeliveryRepository deliveryRepository;
+
+
+    @PostMapping("/order")
+    @Transactional
+    public TypeOrder createOrder(@RequestParam String orderType, @RequestBody TypeOrder typeOrder) {
+        if (orderType.equalsIgnoreCase("PICKUP")) {
+            typeOrder = createPickUpOrder((PickUp) typeOrder);
+        } else if (orderType.equalsIgnoreCase("DELIVERY")) {
+            typeOrder = createDeliveryOrder((Delivery) typeOrder);
         }
+        return typeOrderRepository.save(typeOrder);
     }
+
+    private PickUp createPickUpOrder(PickUp pickUp) {
+        Headquarter headquarter = new Headquarter();
+        // Establecer los datos de headquarter a partir de pickUp
+        headquarterRepository.save(headquarter);
+
+        pickUp.setHeadquarter(headquarter);
+        pickUpRepository.save(pickUp);
+
+        return pickUp;
+    }
+
+    private Delivery createDeliveryOrder(Delivery delivery) {
+        District district = new District();
+        // Establecer los datos de district a partir de delivery
+        districtRepository.save(district);
+
+        delivery.setDistrict(district);
+        deliveryRepository.save(delivery);
+
+        return delivery;
+    }
+
 }
+
+
+
+
+
+

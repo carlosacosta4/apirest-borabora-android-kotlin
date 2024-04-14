@@ -1,5 +1,7 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,7 @@ public class BrandProduct {
     private String brand_product;
 
     @OneToMany(mappedBy = "brandproduct")
+    @JsonManagedReference("cod_brand_product")
     private Collection<Product> products = new ArrayList<>();
 
 }

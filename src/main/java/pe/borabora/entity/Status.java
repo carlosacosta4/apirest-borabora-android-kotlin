@@ -1,6 +1,7 @@
 package pe.borabora.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Status implements Serializable {
     private String status;
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
+    @JsonManagedReference("payment-status")
     private Collection<PaymentGateway> paymentGateways = new ArrayList<>();
 
 }

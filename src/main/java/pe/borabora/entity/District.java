@@ -1,5 +1,7 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +23,6 @@ public class District {
     private String district;
 
     @OneToMany(mappedBy = "district")
+    @JsonManagedReference("delivery-district")
     private Collection<Delivery> deliveries = new ArrayList<>();
 }

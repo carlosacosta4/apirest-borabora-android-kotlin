@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Table(name = "delivery")
 @DiscriminatorValue("DELIVERY")
@@ -25,8 +26,9 @@ public class Delivery extends TypeOrder {
     @Column(name = "department", length = 100)
     private String department;
 
-    @ManyToOne @JoinColumn(name = "cod_district", nullable = false)
-    @JsonBackReference("cod_district")
+    @ManyToOne
+    @JoinColumn(name = "cod_district", nullable = false)
+    @JsonBackReference("delivery-district")
     private District district;
 
     @Column(name = "province", length = 100)
@@ -38,9 +40,6 @@ public class Delivery extends TypeOrder {
     @AssertTrue(message = "Ubigeo number must be 6 digits")
     public boolean isUbigeoValid() {
         return String.valueOf(this.ubigeo).length() == 6;
-    }
-    public Delivery() {
-        setType("DELIVERY");
     }
 
 }

@@ -17,12 +17,8 @@ public class PickUp extends TypeOrder{
     @Column(name = "date")
     private String date;
 
-    public PickUp(String date) {
-        this.setType("PICKUP");
-    }
-
     @ManyToOne
     @JoinColumn(name = "cod_headquarter", nullable = false)
-    @JsonBackReference("cod_headquarter")
+    @JsonBackReference("pickup-headquarter")
     private Headquarter headquarter;
 }

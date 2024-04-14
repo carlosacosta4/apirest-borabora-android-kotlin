@@ -42,11 +42,11 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.GET, "/brand/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/products/topSelling").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/user/updatePassword").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/purchases/**").permitAll();
 
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").hasAnyRole("USER", "ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER", "ADMIN_FULL");
-                    http.requestMatchers(HttpMethod.POST, "/purchases/**").hasAnyRole("USER");
                     http.requestMatchers(HttpMethod.POST, "/categories/createCategory").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.PUT, "/categories/update/{idCategoria}").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.DELETE, "/categories/delete/{id}").hasAnyRole("ADMIN_BASIC");
