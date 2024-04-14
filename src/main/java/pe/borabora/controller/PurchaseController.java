@@ -2,6 +2,8 @@ package pe.borabora.controller;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.borabora.entity.*;
 import pe.borabora.repository.*;
@@ -24,6 +26,15 @@ public class PurchaseController {
     private PickUpRepository pickUpRepository;
     @Autowired
     private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private StatusRepository statusRepository;
+
+    @Autowired
+    private PaymentGatewayRepository paymentGatewayRepository;
+
+    @Autowired
+    private CardTypeRepository cardTypeRepository;
 
 
     @PostMapping("/order")
@@ -58,6 +69,13 @@ public class PurchaseController {
 
         return delivery;
     }
+
+    @PostMapping("/paymentGateway")
+    public ResponseEntity<PaymentGateway> createPaymentGateway(@RequestBody PaymentGateway paymentGateway) {
+        PaymentGateway savedPaymentGateway = paymentGatewayRepository.save(paymentGateway);
+        return ResponseEntity.ok(savedPaymentGateway);
+    }
+
 
 }
 
