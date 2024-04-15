@@ -39,10 +39,10 @@ INSERT INTO category (id_category, image, name) VALUES
 -- Table `bd_borabora`.`type_order`
 -- -----------------------------------------------------
 INSERT INTO type_order (type_order_id, type)
-VALUES (1, 'D1231'),
-       (2, 'R1231'),
-       (3, 'D2594'),
-       (4, 'R4451');   
+VALUES (1, 'DELIVERY'),
+       (2, 'PICKUP'),
+       (3, 'DELIVERY'),
+       (4, 'DELIVERY');
        
 
 -- -----------------------------------------------------

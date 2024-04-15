@@ -2,15 +2,17 @@ package pe.borabora.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pe.borabora.dto.PurchaseDTO;
+import pe.borabora.dto.response.PurchasetResponse;
 import pe.borabora.entity.*;
 import pe.borabora.repository.*;
-import pe.borabora.service.PaymentGatewayService;
-import pe.borabora.service.ProductService;
 import pe.borabora.service.PurchaseService;
-import pe.borabora.service.TypeOrderService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -80,4 +82,23 @@ public class PurchaseServiceImpl implements PurchaseService {
             // Aquí puedes hacer lo necesario para manejar los productos
         }
     }
+
+    @Override
+    public List<PurchasetResponse> getAllPurchases() {
+        List<Purchase> purchaseList = purchaseRepository.findAll();
+
+        return purchaseList.stream().map(purchase -> {
+            PurchasetResponse purchaseDTO = new PurchasetResponse();
+            purchaseDTO.setTotal(purchase.getTotal());
+            purchaseDTO.setIgv(purchase.getIgv());
+            purchaseDTO.setSubtotal(purchase.getSubtotal());
+            purchaseDTO.setPurchaseDate(purchase.getPurchaseDate());
+            purchaseDTO.setPaymentId(purchase.getPayment().getPayment_id());
+            purchaseDTO.setIdentityDoc(purchase.getUser().getIdentityDoc());
+            purchaseDTO.setOrderType(purchase.getOrder().getType());
+            purchaseDTO.setProductIds(purchase.getProducts().stream().map(Product::getId_product).collect(Collectors.toList()));
+            return purchaseDTO;
+        }).collect(Collectors.toList());
+    }
+
 }

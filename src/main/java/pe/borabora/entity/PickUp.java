@@ -21,4 +21,5 @@ public class PickUp extends TypeOrder{
     @JoinColumn(name = "cod_headquarter", nullable = false)
     @JsonBackReference("pickup-headquarter")
     private Headquarter headquarter;
+
 }
