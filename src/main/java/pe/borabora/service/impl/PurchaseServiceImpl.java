@@ -33,6 +33,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Autowired
     private PickUpRepository pickUpRepository;
+    
 
     @Override
     public void createPurchase(PurchaseDTO request) {
@@ -84,18 +85,19 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<PurchasetResponse> getAllPurchases() {
-        List<Purchase> purchaseList = purchaseRepository.findAll();
+    public List<PurchasetResponse> getAllPurchases(Integer identityDoc) {
+        List<Purchase> purchaseList = purchaseRepository.findAllByUserIdentityDoc(identityDoc);
 
         return purchaseList.stream().map(purchase -> {
             PurchasetResponse purchaseDTO = new PurchasetResponse();
+            purchaseDTO.setPurchase_id(purchase.getPurchase_id());
             purchaseDTO.setTotal(purchase.getTotal());
             purchaseDTO.setIgv(purchase.getIgv());
             purchaseDTO.setSubtotal(purchase.getSubtotal());
             purchaseDTO.setPurchaseDate(purchase.getPurchaseDate());
             purchaseDTO.setPaymentId(purchase.getPayment().getPayment_id());
             purchaseDTO.setIdentityDoc(purchase.getUser().getIdentityDoc());
-            purchaseDTO.setOrderType(purchase.getOrder().getType());
+            purchaseDTO.setOrderType(purchase.getOrder().getType_order_id().toString());
             purchaseDTO.setProductIds(purchase.getProducts().stream().map(Product::getId_product).collect(Collectors.toList()));
             return purchaseDTO;
         }).collect(Collectors.toList());

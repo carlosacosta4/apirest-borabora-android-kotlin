@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.borabora.dto.ProductDTO;
 import pe.borabora.dto.response.ApiResponse;
+import pe.borabora.dto.response.ProductResponse;
 import pe.borabora.entity.BrandProduct;
 import pe.borabora.entity.Category;
 import pe.borabora.entity.Product;
@@ -41,15 +42,38 @@ public class ProductController {
 
     //lista los productos segun la categoria
     @GetMapping("/byCategory/{categoryId}")
-    public ResponseEntity<List<ProductDTO>> getProductsByCategoryId(@PathVariable Integer categoryId) {
+    public ResponseEntity<List<ProductResponse>> getProductsByCategoryId(@PathVariable Integer categoryId) {
         if (categoryId != null) {
-            List<ProductDTO> products = productService.getProductsByCategoryId(categoryId);
+            List<ProductResponse> products = productService.getProductsByCategoryId(categoryId);
             return new ResponseEntity<>(products, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    
+    /*
+    //Producto por Id
+    @GetMapping("/product/{id}")
+    public ResponseEntity<ProductDTO> getProductByIdEntity(@PathVariable Integer id) {
+        ProductDTO product = productService.getProductById(id);
+        if (product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    } */
 
+    
+    @GetMapping("/productResponse/{productId}")
+    public ResponseEntity<ProductResponse> getProductResponseById(@PathVariable Integer productId) {
+        ProductResponse product = productService.getProductResponseById(productId);
+        if (product != null) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     //lista los 10 productos màs vendidos (RANKING)
     @GetMapping("/topSelling")
     public ResponseEntity<List<ProductDTO>> getTopSellingProducts(@RequestParam(defaultValue = "10") int limit) {

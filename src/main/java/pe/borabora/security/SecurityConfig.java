@@ -39,14 +39,17 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 
                     http.requestMatchers(HttpMethod.GET, "/categories/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/byCategory/{categoryId}").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/brand/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/products/topSelling").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/product/{id}").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/productResponse/{productId}").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/user/updatePassword").permitAll();
 
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").hasAnyRole("USER", "ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER", "ADMIN_FULL");
-                    http.requestMatchers(HttpMethod.POST, "/purchases/**").hasAnyRole("USER");
+                    http.requestMatchers(HttpMethod.GET, "/purchases/all/{identityDoc}").hasAnyRole("USER","ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.POST, "/categories/createCategory").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.PUT, "/categories/update/{idCategoria}").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.DELETE, "/categories/delete/{id}").hasAnyRole("ADMIN_BASIC");
@@ -55,7 +58,6 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.DELETE, "/products/delete/{id}").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.GET, "/products/all").hasAnyRole("ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.GET, "/products/{productId}").hasAnyRole("ADMIN_BASIC", "ADMIN_FULL");
-                    http.requestMatchers(HttpMethod.GET, "/purchases/all").hasAnyRole("ADMIN_BASIC", "ADMIN_FULL");
 
                     http.anyRequest().denyAll();
                 })

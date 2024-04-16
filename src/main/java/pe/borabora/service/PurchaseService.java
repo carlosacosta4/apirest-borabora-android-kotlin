@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PurchaseService {
     void createPurchase(PurchaseDTO request);
-    List<PurchasetResponse> getAllPurchases();
+    List<PurchasetResponse> getAllPurchases(Integer identityDoc);
 }

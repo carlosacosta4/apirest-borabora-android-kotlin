@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pe.borabora.dto.ProductDTO;
+import pe.borabora.dto.response.ProductResponse;
 import pe.borabora.entity.BrandProduct;
 import pe.borabora.entity.Category;
 import pe.borabora.entity.Product;
@@ -35,14 +36,27 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<ProductDTO> getProductsByCategoryId(Integer categoryId) {
+    public List<ProductResponse> getProductsByCategoryId(Integer categoryId) {
         List<Product> productList = productRepository.findByCategoryId(categoryId);
         return productList.stream()
-                .map(ProductDTO::new)
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    private ProductResponse mapToResponse(Product product) {
+        ProductResponse response = new ProductResponse();
+        response.setId_product(product.getId_product());
+        response.setName(product.getName());
+        response.setDescription(product.getDescription());
+        response.setPrice(product.getPrice());
+        response.setStock(product.getStock());
+        response.setExpirationDate(product.getExpirationDate());
+        response.setImage(product.getImage());
+        response.setCategoryId(product.getCategory().getId_category());
+        response.setCategoryName(product.getCategory().getName());
+        response.setBrandProductName(product.getBrandproduct().getBrand_product());
+        return response;
+    }
     @Override
     public List<ProductDTO> getTopSellingProducts(int limit) {
         Pageable pageable = PageRequest.of(0, 10);
@@ -61,6 +75,26 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductById(Integer productId) {
         Product product = productRepository.findByIdAndDeletedFalse(productId).orElse(null);
         return new ProductDTO(product);
+    }
+    
+    
+    @Override
+    public ProductResponse getProductResponseById(Integer productId) {
+        Product product = productRepository.findByIdAndDeletedFalse(productId).orElse(null);
+        if (product == null) {
+            return null;
+        }
+        ProductResponse response = new ProductResponse();
+        response.setId_product(product.getId_product());
+        response.setName(product.getName());
+        response.setDescription(product.getDescription());
+        response.setPrice(product.getPrice());
+        response.setStock(product.getStock());
+        response.setExpirationDate(product.getExpirationDate());
+        response.setImage(product.getImage());
+        response.setCategoryName(product.getCategory().getName()); // Cambiado de setCategoryId a setCategoryName
+        response.setBrandProductName(product.getBrandproduct().getBrand_product()); // Cambiado de setBrandProductId a setBrandProductName
+        return response;
     }
 
     // Método para mapear un DTO de producto a una entidad Product

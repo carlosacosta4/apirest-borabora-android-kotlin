@@ -17,22 +17,11 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
-    @PostMapping("/purchases")
-    public ResponseEntity<String> createPurchase(@RequestBody PurchaseDTO request) {
-        try {
-            purchaseService.createPurchase(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Purchase created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating purchase: " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<PurchasetResponse>> getAllPurchases(){
-        List<PurchasetResponse> purchaseDTOS = purchaseService.getAllPurchases();
+    @GetMapping("/all/{identityDoc}")
+    public ResponseEntity<List<PurchasetResponse>> getAllPurchases(@PathVariable Integer identityDoc){
+        List<PurchasetResponse> purchaseDTOS = purchaseService.getAllPurchases(identityDoc);
         return new ResponseEntity<>(purchaseDTOS, HttpStatus.OK);
     }
-
 
 
 }

@@ -10,6 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseDTO {
+	
+	private Integer compraId;
     private Double total;
     private Double igv;
     private Double subtotal;

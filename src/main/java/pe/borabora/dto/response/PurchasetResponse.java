@@ -10,6 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchasetResponse {
+	
+	private Integer purchase_id;
     private Double total;
     private Double igv;
     private Double subtotal;
