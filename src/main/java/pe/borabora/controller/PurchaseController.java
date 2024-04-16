@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,6 +55,7 @@ public class PurchaseController {
     @Autowired
     private EntityManager entityManager;
     
+    @Autowired
     private PurchaseService purchaseService;
 
 
@@ -118,6 +121,27 @@ public class PurchaseController {
 		    List<PurchasetResponse> purchaseDTOS = purchaseService.getAllPurchases(identityDoc);
 		    return new ResponseEntity<>(purchaseDTOS, HttpStatus.OK);
 }
+		
+		@GetMapping("/{purchase_id}")
+		public ResponseEntity<PurchasetResponse> getPurchaseById(@PathVariable Integer purchase_id){
+		    Optional<Purchase> purchaseOptional = purchaseRepository.findById(purchase_id);
+		    if (purchaseOptional.isPresent()) {
+		        Purchase purchase = purchaseOptional.get();
+		        PurchasetResponse purchaseDTO = new PurchasetResponse();
+		        purchaseDTO.setPurchase_id(purchase.getPurchase_id());
+		        purchaseDTO.setTotal(purchase.getTotal());
+		        purchaseDTO.setIgv(purchase.getIgv());
+		        purchaseDTO.setSubtotal(purchase.getSubtotal());
+		        purchaseDTO.setPurchaseDate(purchase.getPurchaseDate());
+		        purchaseDTO.setPaymentId(purchase.getPayment().getPayment_id());
+		        purchaseDTO.setIdentityDoc(purchase.getUser().getIdentityDoc());
+		        purchaseDTO.setOrderType(purchase.getOrder().getType_order_id().toString());
+		        purchaseDTO.setProductIds(purchase.getProducts().stream().map(Product::getId_product).collect(Collectors.toList()));
+		        return new ResponseEntity<>(purchaseDTO, HttpStatus.OK);
+		    } else {
+		        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		    }
+		}
 }
 
 

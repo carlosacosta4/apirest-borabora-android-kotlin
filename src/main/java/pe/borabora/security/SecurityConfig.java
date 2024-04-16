@@ -49,7 +49,9 @@ public class SecurityConfig {
                     //EndPoints Privados
                     http.requestMatchers(HttpMethod.GET, "/user/findUser/{}").hasAnyRole("USER", "ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.PUT, "/user/updateUser/{}").hasAnyRole("USER", "ADMIN_FULL");
-                    http.requestMatchers(HttpMethod.GET, "/purchases/all/{identityDoc}").hasAnyRole("USER","ADMIN_BASIC", "ADMIN_FULL");
+                    http.requestMatchers(HttpMethod.GET, "/purchase/all/{identityDoc}").hasAnyRole("USER","ADMIN_BASIC", "ADMIN_FULL");
+                    http.requestMatchers(HttpMethod.GET, "/purchase/{purchase_id}").hasAnyRole("USER","ADMIN_BASIC", "ADMIN_FULL");
+
                     http.requestMatchers(HttpMethod.POST, "/categories/createCategory").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.PUT, "/categories/update/{idCategoria}").hasAnyRole("ADMIN_BASIC");
                     http.requestMatchers(HttpMethod.DELETE, "/categories/delete/{id}").hasAnyRole("ADMIN_BASIC");
@@ -59,7 +61,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.GET, "/products/all").hasAnyRole("ADMIN_BASIC", "ADMIN_FULL");
                     http.requestMatchers(HttpMethod.GET, "/products/{productId}").hasAnyRole("ADMIN_BASIC", "ADMIN_FULL");
 
-                    http.requestMatchers(HttpMethod.POST, "/purchase/**").hasAnyRole("USER");
+                    http.requestMatchers(HttpMethod.POST, "/purchase/{orderType}").hasAnyRole("USER");
 
 
                     http.anyRequest().denyAll();
