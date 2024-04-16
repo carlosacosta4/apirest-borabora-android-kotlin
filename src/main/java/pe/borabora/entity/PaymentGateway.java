@@ -43,11 +43,11 @@ public class PaymentGateway implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cod_card_type", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("cardtype-payment")
     private CardType card_type;
 
     @ManyToOne
     @JoinColumn(name = "codigo_status", nullable = false)
-    @JsonBackReference // Para evitar ciclos infinitos en la serialización JSON
+    @JsonBackReference("payment-status")
     private Status status;
 }

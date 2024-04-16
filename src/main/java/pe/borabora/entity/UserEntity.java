@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

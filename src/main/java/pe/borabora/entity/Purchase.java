@@ -1,5 +1,6 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,7 @@ public class Purchase implements Serializable { //compra
 
     @ManyToOne
     @JoinColumn(name = "type_order_id")
+    @JsonBackReference("order-purchase")
     private TypeOrder order;
 
     @ManyToMany

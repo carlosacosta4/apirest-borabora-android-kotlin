@@ -1,5 +1,6 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class CardType implements Serializable {
     private Character type;
 
     @OneToMany(mappedBy = "card_type", cascade = CascadeType.ALL)
+    @JsonManagedReference("cardtype-payment")
     private Collection<PaymentGateway> paymentGateways = new ArrayList<>();
 }

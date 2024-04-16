@@ -1,5 +1,9 @@
 package pe.borabora.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +17,12 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
 @Entity
-public class TypeOrder {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "orderType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Delivery.class, name = "DELIVERY"),
+        @JsonSubTypes.Type(value = PickUp.class, name = "PICKUP")
+})
+public abstract class TypeOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer type_order_id;
@@ -21,10 +30,7 @@ public class TypeOrder {
     @Column(name = "type", insertable = false, updatable = false)
     private String type;
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @OneToMany(mappedBy = "order")
+    @JsonBackReference("order-purchase")
     private List<Purchase> purchases;
 }

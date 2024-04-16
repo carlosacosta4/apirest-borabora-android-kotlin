@@ -36,7 +36,8 @@ public class GlobalExceptionHandler {
 
 	     return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
 	 }
-	 
+
+
 	 // Manejo de las excepciones HttpMessageNotReadableException
 	 @ExceptionHandler(HttpMessageNotReadableException.class)
 	 public ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
